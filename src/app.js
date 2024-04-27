@@ -1,5 +1,6 @@
 const  express = require("express");
 const  app = express();
+require('dotenv').config({ path: '../var/www/.env' });
 
 require("./db/conn");
 const router = require('./router/router');
@@ -26,7 +27,6 @@ var ejs_folder_path = path.join(__dirname, "../templates");
 app.set("view engine", "ejs");
 app.set("views", ejs_folder_path);
 
-require('dotenv').config();
 
 const  port = process.env.PORT || 3500;
 

@@ -9,7 +9,6 @@ const moment = require('moment-timezone');
 
 const session = require("express-session");
 
-require('dotenv').config();
 
 var SECRET_KEY = process.env.SECRET_KEY || "YOURSECRETKEYGOESHERE";
 var PUSHDATALOCATION = process.env.PUSHDATALOCATION || "https://wevalet.s3.amazonaws.com";
@@ -519,23 +518,25 @@ class class1 {
                     var PhoneNumberCheck = await req.body.Phone;
                     var PhoneNumberCheckOfficial = await PhoneNumberCheck.slice(0, 3);
 
+                   
+
                     if (PhoneNumberCheckOfficial == +91) {
-                        var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
+                        var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: "000000" } });
                         await updateuser.save();
-                        axios.get(`http://13.126.35.230//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
-                            .then((response) => {
 
-                                var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
-                                res.status(HTTP.SUCCESS).json(a);
-
-                            })
-                            .catch((error) => {
-                                console.error(`Error: ${error}`);
-                            });
+                        // console.log(); ("Call OTP Service")
+                        // axios.get(`http://13.126.35.230//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
+                        //     .then((response) => {
+                        //         var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
+                        //         res.status(HTTP.SUCCESS).json(a);
+                        //     })
+                        //     .catch((error) => {
+                        //         console.error(`Error: ${error}`);
+                        //     });
 
                     } else {
-                        var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
-                        await updateuser.save();
+                        // var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
+                        // await updateuser.save();
                         // async function convertPhoneNumber(Parameter1) {
 
                         //     let stringWithoutSpaces = await Parameter1.replace(/\s/g, "");
@@ -575,7 +576,6 @@ class class1 {
                         res.status(HTTP.SUCCESS).json(a);
 
                     }
-
                 }
 
             } else {
