@@ -118,7 +118,7 @@ class class1 {
                 }
 
                 if (VehicleDetailArray.includes(req.body.RegistrationNumber)) {
-                    const response = { "message": "Please choose Another RegistrationNumber", "status": HTTP.UNAUTHORIZED };
+                    const response = { "message": "Please  choose Another RegistrationNumber", "status": HTTP.UNAUTHORIZED };
                     res.status(HTTP.UNAUTHORIZED).json(response); // status code
                 } else {
 
