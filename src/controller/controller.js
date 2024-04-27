@@ -91,8 +91,8 @@ function formatPhoneNumber(number, number2) {
 
 const twilio = require('twilio');
 
-const accountSid = process.env.AccountSid || "ACb1ae0a92179b49440aa44e4bbe5ca57d";
-const authToken = process.env.AuthToken || "31a9b374f178f1a99d94efc2cddd20f7";
+const accountSid = process.env.AccountSid;
+const authToken = process.env.AuthToken;
 const client = twilio(accountSid, authToken);
 
 class class1 {
