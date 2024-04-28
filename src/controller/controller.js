@@ -518,21 +518,21 @@ class class1 {
                     var PhoneNumberCheck = await req.body.Phone;
                     var PhoneNumberCheckOfficial = await PhoneNumberCheck.slice(0, 3);
 
-                   
+                    var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
+                    await updateuser.save();
+
 
                     if (PhoneNumberCheckOfficial == +91) {
-                        var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: "000000" } });
-                        await updateuser.save();
-
-                        // console.log(); ("Call OTP Service")
-                        // axios.get(`http://13.126.35.230//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
-                        //     .then((response) => {
+                     
+                        console.log(); ("Call OTP Service")
+                        axios.get(`http://13.126.35.230//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
+                            .then((response) => {
                                 var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
                                 res.status(HTTP.SUCCESS).json(a);
-                        //     })
-                        //     .catch((error) => {
-                        //         console.error(`Error: ${error}`);
-                        //     });
+                            })
+                            .catch((error) => {
+                                console.error(`Error: ${error}`);
+                            });
 
                     } else {
                         // var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
@@ -3860,7 +3860,6 @@ class class1 {
                         if (transformedData[i].kilometer <= 2) {
                             await DataArray.push(transformedData[i]);
                         }
-
                     }
 
                     const message = { "data": DataArray, "status": `${HTTP.SUCCESS}`, "Active": Data3 }
