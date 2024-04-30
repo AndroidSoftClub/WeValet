@@ -42,12 +42,12 @@
 
     @media (min-width: 992px) {
 
-      .nav{
+      .nav {
         min-height: calc(100vh - 180px);
       }
 
-      .card{
-      height: calc(100vh - 85px);
+      .card {
+        height: calc(100vh - 85px);
       }
 
       .sidebar .sidebar-wrapper {
@@ -62,7 +62,7 @@
         display: none;
       }
 
-      .card-header{
+      .card-header {
         display: none;
       }
 
@@ -70,7 +70,7 @@
 
     @media (max-width: 991px) {
 
-      #HidePicture4{
+      #HidePicture4 {
         display: none;
       }
 
@@ -80,11 +80,11 @@
         border-top: 1px solid #0070C0;
       }
 
-      .sidebar{
-        background:white;
+      .sidebar {
+        background: white;
       }
 
-      .wrapper{
+      .wrapper {
         height: 100%;
       }
 
@@ -133,8 +133,9 @@
       background-image: none;
     }
 
-    .card .card-body {
-      background-color: white;
+    .card .card-body h1 {
+      color:black;
+    background-color: wheat;
     }
 
     .sidebar {
@@ -151,17 +152,10 @@
       cursor: pointer;
     }
 
-    #MainId{
-      background: linear-gradient(#0070C0, #0070C0);
+    body {
+      background-color: #0070C0;
     }
-
-    .table>thead>tr>th {
-      color: black;
-    }
-
-    .table>tbody>tr>th {
-      color: #D1D1D4;
-    }
+   
   </style>
 
 </head>
@@ -253,26 +247,26 @@
                                         </li>
                                         <% } %>
 
-                                        <% if (Access15===1) { %>
-                                          <li>
-                                            <a href="/Payment">
-                                              <p onmouseover="this.style.color='#D1D1D4'"
-                                                onmouseout="this.style.color='black'">Payment</p>
-                                            </a>
-                                          </li>
-                                          <% } %>
-                                          <% if (Access16===1) { %>
+                                          <% if (Access15===1) { %>
                                             <li>
-                                              <a href="/QRCode">
+                                              <a href="/Payment">
                                                 <p onmouseover="this.style.color='#D1D1D4'"
-                                                  onmouseout="this.style.color='black'">QRCode</p>
+                                                  onmouseout="this.style.color='black'">Payment</p>
                                               </a>
                                             </li>
                                             <% } %>
+                                            <% if (Access16===1) { %>
+                                              <li>
+                                                <a href="/QRCode">
+                                                  <p onmouseover="this.style.color='#D1D1D4'"
+                                                    onmouseout="this.style.color='black'">QRCode</p>
+                                                </a>
+                                              </li>
+                                              <% } %>
         </ul>
       </div>
     </div>
-    <div class="main-panel" id="MainId">
+    <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
         <div class="container-fluid">
@@ -309,9 +303,9 @@
                     <li class="nav-link"><a style="color: black;background-color: transparent;"
                         onmouseover="this.style.color='#D1D1D4'" onmouseout="this.style.color='black'" href="Change"
                         class="nav-item dropdown-item">Change Password</a></li>
-                        <li class="nav-link"><a style="color: black;background-color: transparent;"
-                          onmouseover="this.style.color='#D1D1D4'" onmouseout="this.style.color='black'" href="Logout"
-                          class="nav-item dropdown-item">Log out</a></li>
+                    <li class="nav-link"><a style="color: black;background-color: transparent;"
+                        onmouseover="this.style.color='#D1D1D4'" onmouseout="this.style.color='black'" href="Logout"
+                        class="nav-item dropdown-item">Log out</a></li>
                   </ul>
                 </li>
               </ul>
@@ -337,8 +331,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
                   <li class="nav-link"><a style="color: black;background-color: transparent;"
-                    onmouseover="this.style.color='#D1D1D4'" onmouseout="this.style.color='black'" href="Change"
-                    class="nav-item dropdown-item">Change Password</a></li>
+                      onmouseover="this.style.color='#D1D1D4'" onmouseout="this.style.color='black'" href="Change"
+                      class="nav-item dropdown-item">Change Password</a></li>
                   <li class="nav-link"><a style="color: black;background-color: transparent;"
                       onmouseover="this.style.color='#D1D1D4'" onmouseout="this.style.color='black'" href="Logout"
                       class="nav-item dropdown-item">Log out</a></li>
@@ -362,105 +356,89 @@
           </div>
         </div>
       </div>
+      <!-- End Navbar -->
 
-      <% if (Access11===1) { %>
 
-        <!-- End Navbar -->
         <div class="content">
           <div class="row">
             <div class="col-md-12">
-              <div class="card ">
-                <div class="card-header">
-                  <h4 class="card-title">Shopping Malls</h4>
-                </div>
+              <div class="card">
                 <div class="card-body">
-                  <div class="table-responsive">
-                    <form id="hotel-filter-form">
-                      <div class="form-row">
-                        <div class="col">
-                          <input style="color: #D1D1D4;" type="text" class="form-control" placeholder="City" id="city-input">
-                        </div>
-                        <div class="col">
-                          <input style="color: #D1D1D4;" type="text" class="form-control" placeholder="State" id="state-input">
-                        </div>
-                        <div class="col">
-                          <input type="date" style="color: #D1D1D4;" class="form-control" id="date-input">
-                        </div>
-                        <div class="col">
-                          <button type="submit" onclick="abc()" class="btn btn-primary" style="background-color: #0070C0;border: none;color: #D1D1D4;">Search</button>
-                        </div>
-                      </div>
-                    </form>
-                    <table class="table tablesorter " id="">
-                      <thead class=" text-primary">
-                        <tr>
-                          <th class="text-center">
-                            Name
-                          </th>
-                          <th class="text-center">
-                            Address
-                          </th>
-                          <th class="text-center">
-                            Valets
-                          </th>
-                          <th class="text-center">
-                            Business Manager Name
-                          </th>
-                          <th class="text-center">
-                            Phone
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% for (var j=0; j < User.length; j++) { %>
+              
 
-                          <tr>
-                            <th class="text-center">
-                              <%= User[j].UnitName %>
-                            </th>
-                            <th class="text-center">
-                              <%= User[j].UnitAddress %>
-                            </th>
-                            <th class="text-center">
-                              <%= User[j].Valets.length %>
-                            </th>
-                            <th class="text-center">
-                              <%= User[j].ManagerName %>
-                            </th>
-                            <th class="text-center">
-                              <%= User[j].Phone %>
-                            </th>
-                          </tr>
 
-                          <% } %>
-                      </tbody>
-                    </table>
-                  </div>
+                  <h1>Fenil</h1>
+
                 </div>
               </div>
             </div>
           </div>
+
         </div>
 
-        <% } %>
 
     </div>
   </div>
-  <!--   Core JS Files   -->
+
+  <script>
+
+    function addKey() {
+
+      var keyCount = parseInt(document.querySelectorAll('.row').length) - 16;
+
+      var newRow = document.createElement('div');
+      newRow.className = 'row';
+
+      var newCol1 = document.createElement('div');
+      newCol1.className = 'col-md-6';
+      var newCol2 = document.createElement('div');
+      newCol2.className = 'col-md-6';
+
+      var newReviewBy = document.createElement('input');
+      newReviewBy.type = 'text';
+      newReviewBy.className = 'form-control';
+      newReviewBy.placeholder = 'Review By ' + keyCount;
+      newReviewBy.name = 'ReviewBy' + keyCount;
+
+      var newReview = document.createElement('input');
+      newReview.type = 'text';
+      newReview.className = 'form-control';
+      newReview.placeholder = 'Review ' + keyCount;
+      newReview.name = 'Review' + keyCount;
+
+      var label1 = document.createElement('label');
+      label1.appendChild(document.createTextNode('Review By ' + keyCount));
+      var label2 = document.createElement('label');
+      label2.appendChild(document.createTextNode('Review ' + keyCount));
+
+      newCol1.appendChild(label1);
+      newCol1.appendChild(newReviewBy);
+
+      newCol2.appendChild(label2);
+      newCol2.appendChild(newReview);
+
+      newRow.appendChild(newCol1);
+      newRow.appendChild(newCol2);
+
+      var container = document.getElementById('dynamicFieldsContainer');
+      container.appendChild(newRow);
+
+    }
+
+  </script>
+
+
   <script src="/WeValet/src/css/js/core/jquery.min.js"></script>
   <script src="/WeValet/src/css/js/core/popper.min.js"></script>
   <script src="/WeValet/src/css/js/core/bootstrap.min.js"></script>
   <script src="/WeValet/src/css/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <!-- Place this tag in your head or just before your close body tag. -->
+
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
+
   <script src="/WeValet/src/css/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
+
   <script src="/WeValet/src/css/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/WeValet/src/css/js/black-dashboard.min.js?v=1.0.0"></script>
-  <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="/WeValet/src/css/demo/demo.js"></script>
   <script>
     $(document).ready(function () {
@@ -588,25 +566,24 @@
         application: "black-dashboard-free"
       });
   </script>
-  <script>
-    document.getElementById("callApiButton").addEventListener("click", function () {
-      var inputValue1 = document.getElementById("myInput1").value;
-      var inputValue2 = document.getElementById("myInput2").value;
-      var inputValue3 = document.getElementById("myInput3").value;
-      var inputValue4 = document.getElementById("myInput4").value;
-      var inputValue5 = document.getElementById("myInput5").value;
-      var inputValue6 = document.getElementById("myInput6").value;
-      var inputValue7 = document.getElementById("myInput7").value;
 
-      const url = 'CreateBusiness';
+  <script>
+    document.getElementById("callApiButton").addEventListener("click", async function () {
+
+      var inputFields = document.querySelectorAll('#myForm input[type="text"]');
+
+      var values = [];
+
+      inputFields.forEach(async function (input) {
+        values[input.id] = input.value;
+        await values.push(input.value)
+      });
+
+      // var inputValue1 = await document.getElementById("myInput1").value;
+
+      const url = 'Payment';
       const data = {
-        UserName: inputValue1,
-        ManagerName: inputValue2,
-        ManagerDestination: inputValue3,
-        PassWord: inputValue4,
-        UnitName: inputValue5,
-        UnitType: inputValue6,
-        UnitAddress: inputValue7
+        DataArray: values,
       };
 
       fetch(url, {
@@ -618,64 +595,33 @@
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          window.location.href = "/DashBoard";
-          // alert("Business Account Create Successfully"); 
+          if(data.message == "Payment Related Data Update Successfully"){
+              alert("Update Payment Amounts Successfully");
+              window.location.href = "/Payment";
+            }else{
+              alert("Does Not Update Payment Amounts");
+            }
         })
         .catch(error => {
           console.error('Error:', error);
+          alert("Does Not Create User Account");
         });
+
     });
   </script>
+
   <script>
-
-    async function abc() {
-
-      event.preventDefault();
-
-      var myScriptVariable = '<%= Ip %>';
-
-      var City = document.getElementById("city-input").value;
-      var State = document.getElementById("state-input").value;
-      var Date = document.getElementById("date-input").value;
-
-      if (Date) {
-        console.log(Date)
-      } else {
-        Date = await "All"
-      }
-
-      if (City) {
-        City = City + "0"
-      } else {
-        City = await 0
-      }
-
-      if (State) {
-        State = State + "0"
-      } else {
-        State = await "All"
-      }
-
-      var url = myScriptVariable + "/Mall/" + City + "/" + State + "/" + Date;
-      window.location.href = url;
-
+    // Function to remove inline CSS properties
+    function removeInlineStyles(element) {
+      element.removeAttribute('style');
     }
 
+    // Get the element by its ID or another selector
+    var myElement = document.getElementById('perfect-scrollbar-on');
+
+    // Call the function to remove inline styles
+    removeInlineStyles(myElement);
   </script>
-
-<script>
-  // Function to remove inline CSS properties
-  function removeInlineStyles(element) {
-    element.removeAttribute('style');
-  }
-
-  // Get the element by its ID or another selector
-  var myElement = document.getElementById('perfect-scrollbar-on');
-
-  // Call the function to remove inline styles
-  removeInlineStyles(myElement);
-</script>
 
 </body>
 

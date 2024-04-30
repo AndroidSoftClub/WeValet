@@ -31,6 +31,8 @@ function verifyToken(req, res, next) {
 }
 
 router.post("/CreateUser", upload.array("picture"), class1.a);
+router.post("/qrcodebynumber", class1.qrcode);
+router.get("/demo", class1.demo);
 router.post("/CreateBusiness", upload.array("picture"), class1.b);
 router.post("/AddVehicle", verifyToken, upload.array("picture"), class1.c);
 router.post("/UserLoginOtpSend", class1.d);
@@ -59,6 +61,7 @@ router.get("/User", class1.t);
 router.post("/User", class1.u);
 router.get("/Customer", class1.v);
 router.get("/Customer/:id1", class1.w);
+router.get("/QrCode", class2.qrcode);
 router.post("/Customer", class1.v2);
 router.post("/Customer/:id1", class1.w2);
 router.get("/Parking", class1.x);

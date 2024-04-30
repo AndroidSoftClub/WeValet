@@ -1,5 +1,6 @@
 var { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10 } = require("../model/schema");
 const HTTP = require("../../constant/response.constant");
+var QRCode = require('qrcode')
 
 var jwt = require("jsonwebtoken");
 var path = require("path");
@@ -203,6 +204,36 @@ class class1 {
             } else {
                 const response = { "message": "User Exist", "status": HTTP.UNAUTHORIZED };
                 res.status(HTTP.UNAUTHORIZED).json(response); // status code
+            }
+
+        } catch (e) {
+            console.log(e);
+            var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        }
+    };
+    static demo = async (req, res) => {
+        try {
+            var a = { "message": `Demo Api Call`, "status": `${HTTP.SUCCESS}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        } catch (e) {
+            console.log(e);
+            var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        }
+    };
+    static qrcode = async (req, res) => {
+        try {
+            let number = req.body.qrnumber
+            if (number) {
+                QRCode.toDataURL(number, { version: 2 }, function (err, url) {
+                    console.log(url)
+                    var a = { "message": url, "status": `${HTTP.SUCCESS}` }
+                    res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                })
+            } else {
+                var a = { "message": 'Please Enter the number', "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
             }
 
         } catch (e) {
@@ -523,7 +554,7 @@ class class1 {
 
 
                     if (PhoneNumberCheckOfficial == +91) {
-                     
+
                         console.log(); ("Call OTP Service")
                         axios.get(`http://13.126.35.230//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
                             .then((response) => {
@@ -2737,8 +2768,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("First", { User2, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("First", { User2, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -2776,8 +2808,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("User", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("User", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -2870,10 +2903,11 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
                 var exampleValue = 1;
 
-                res.render("Customer", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, exampleValue });
+                res.render("Customer", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, exampleValue, Access16 });
 
             } else {
 
@@ -2919,8 +2953,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Customer", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Customer", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3034,6 +3069,7 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
                 const currentDate = new Date();
                 const year = currentDate.getFullYear();
@@ -3042,7 +3078,7 @@ class class1 {
 
                 const formattedDateTime = `${year}-${month}-${day}`;
 
-                res.render("Parking", { User2, a, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, formattedDateTime });
+                res.render("Parking", { User2, a, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, formattedDateTime, Access16 });
 
             } else {
 
@@ -3306,8 +3342,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Parking", { User2, a, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, formattedDateTime });
+                res.render("Parking", { User2, a, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, formattedDateTime, Access16 });
 
             } else {
 
@@ -3345,8 +3382,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Hotel", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Hotel", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3416,8 +3454,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Hotel", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Hotel", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3455,8 +3494,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Restaurant", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Restaurant", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3526,8 +3566,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Restaurant", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Restaurant", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3565,8 +3606,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Mall", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Mall", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3636,8 +3678,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Mall", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Mall", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3677,8 +3720,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Other", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Other", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -3750,8 +3794,9 @@ class class1 {
                 var Access13 = await User2.Access13;
                 var Access14 = await User2.Access14;
                 var Access15 = await User2.Access15;
+                var Access16 = await User2.Access16;
 
-                res.render("Other", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15 });
+                res.render("Other", { User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
 
             } else {
 
@@ -7002,6 +7047,62 @@ class class2 {
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
+    static v = async (req, res) => {
+        try {
+
+            if (req.session.userid) {
+
+                var User2 = await Todo3.findOne({ signuptoken: req.session.userid });
+
+                res.render("Change", { User2 });
+
+            } else {
+
+                res.redirect('/Login');
+
+            }
+
+        } catch (e) {
+            console.log(e);
+            var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        }
+    };
+
+    static qrcode = async (req, res) => {
+        try {
+
+            var User2 = await Todo3.findOne({ signuptoken: req.session.userid });
+            var User = await Todo3.findOne({ signuptoken: req.session.userid });
+
+            var Access1 = await User2.Access1;
+            var Access2 = await User2.Access2;
+            var Access3 = await User2.Access3;
+            var Access4 = await User2.Access4;
+            var Access5 = await User2.Access5;
+            var Access6 = await User2.Access6;
+            var Access7 = await User2.Access7;
+            var Access8 = await User2.Access8;
+            var Access9 = await User2.Access9;
+            var Access10 = await User2.Access10;
+            var Access11 = await User2.Access11;
+            var Access12 = await User2.Access12;
+            var Access13 = await User2.Access13;
+            var Access14 = await User2.Access14;
+            var Access15 = await User2.Access15;
+            var Access16 = await User2.Access16;
+
+            var User3 = await Todo9.find({});
+
+            res.render("QRCode", { User3, User2, User, Ip, Access1, Access2, Access3, Access4, Access5, Access6, Access7, Access8, Access9, Access10, Access11, Access12, Access13, Access14, Access15, Access16 });
+
+        } catch (e) {
+            console.log(e);
+            var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        }
+    };
+
     static w = async (req, res) => {
         try {
 

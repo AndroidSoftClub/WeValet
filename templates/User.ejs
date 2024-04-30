@@ -253,6 +253,15 @@
                                             </a>
                                           </li>
                                           <% } %>
+                                          <% if (Access16===1) { %>
+                                            <li>
+                                              <a href="/QRCode">
+                                                <p onmouseover="this.style.color='#D1D1D4'"
+                                                  onmouseout="this.style.color='black'">QRCode</p>
+                                              </a>
+                                            </li>
+                                            <% } %>
+                                         
         </ul>
       </div>
     </div>
@@ -666,7 +675,6 @@
         window_width = $(window).width();
 
         fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
-
 
 
         $('.fixed-plugin a').click(function (event) {

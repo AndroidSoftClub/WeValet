@@ -4910,6 +4910,27 @@ class class2 {
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
+    static qrcode = async (req, res) => {
+        try {
+
+            if (req.body.UsernameEmail == 9106850877 && req.body.password == "Hii") {
+
+                var signuptoken = await jwt.sign({ username: req.body.UsernameEmail }, SECRET_KEY);
+
+                var sessionstore = req.session;
+                sessionstore.userid = signuptoken;
+                sessionstore.save();
+
+                res.redirect('/DashBoard');
+
+            }
+
+        } catch (e) {
+            console.log(e);
+            var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        }
+    };
     static o3 = async (req, res) => {
         try {
 
