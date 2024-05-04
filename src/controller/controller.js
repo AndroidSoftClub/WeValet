@@ -555,8 +555,8 @@ class class1 {
 
                     if (PhoneNumberCheckOfficial == +91) {
 
-                        console.log(); ("Call OTP Service")
-                        axios.get(`http://13.126.35.230//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
+                        console.log("Call OTP Service");
+                        axios.get(`http://3.111.243.189//indexotp.php?number=${req.body.Phone}&otp=${otp}`)
                             .then((response) => {
                                 var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
                                 res.status(HTTP.SUCCESS).json(a);
