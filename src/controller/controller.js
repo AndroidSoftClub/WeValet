@@ -1262,8 +1262,8 @@ class class1 {
     //     }
     // };
     static i = async (req, res) => {
-
         try {
+
             if (req.UserName) {
 
                 const headerValue = req.get('Authorization');
@@ -1751,212 +1751,213 @@ class class1 {
 
                     if (User.token == headerValue) {
 
-                        var ParkedCar11 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "" })
-                        if (ParkedCar11.length == 0) {
+                        // var a = [];
+                        // for (var i = 0; i < req.files.length; i++) {
+                        //     await a.push(Ip + "/public/" + req.files[i].filename)
+                        // }
 
-                            var Parklocation = await User.BusinessUnitName;
+                        var Parklocation = await User.BusinessUnitName;
 
-                            console.log(Parklocation)
-                            var AwsState = await Todo2.find({ UnitName: Parklocation });
+                        var AwsState = await Todo2.find({ UnitName: Parklocation });
+                        var OfficialState = await AwsState[0].State;
+                        var OfficialCity = await AwsState[0].City;
 
-                            console.log(AwsState)
-                            var OfficialState = await AwsState[0].State;
-                            var OfficialCity = await AwsState[0].City;
+                        const suratTimezone = 'Asia/Kolkata';
+                        const currentTimeInSurat = moment().tz(suratTimezone).format('YYYY-MM-DDTHH:mm:ss');
 
-                            const postData2 = {
-                                RegistrationNumber: req.body.RegistrationNumber,
-                            };
+                        const currentDate = new Date(currentTimeInSurat);
 
-                            const response = await axios.post(`${Ip}/NumberToMember`, postData2);
+                        var currentYear = await currentDate.getFullYear();
+                        var currentMonth;
+                        var currentDay;
+                        var currentHours;
+                        var currentMinutes;
+                        var currentSeconds;
 
-                            var UserDataUsername = await response.data.message[0];
-                            var UserData = await Todo.find({ UserName: UserDataUsername })
+                        if (currentDate.getMonth() < 10) {
+                            var currentMonth = await `0${currentDate.getMonth() + 1}`;
+                        } else {
+                            var currentMonth = await currentDate.getMonth() + 1;
+                        }
 
-                            var UpdatedParklocation = [];
+                        if (currentDate.getDate() < 10) {
+                            var currentDay = await `0${currentDate.getDate()}`;
+                        } else {
+                            var currentDay = await currentDate.getDate();
+                        }
 
-                            if (req.body.UpdatedParklocation) {
-                                await UpdatedParklocation.push(req.body.UpdatedParklocation)
-                            } else {
-                                await UpdatedParklocation.push(Parklocation)
-                            }
+                        if (currentDate.getHours() < 10) {
+                            var currentHours = await `0${currentDate.getHours()}`;
+                        } else {
+                            var currentHours = await currentDate.getHours();
+                        }
 
-                            const locations = [];
+                        if (currentDate.getMinutes() < 10) {
+                            var currentMinutes = await `0${currentDate.getMinutes()}`;
+                        } else {
+                            var currentMinutes = await currentDate.getMinutes();
+                        }
 
-                            if (UserData[0].VehicleDetail) {
+                        if (currentDate.getSeconds() < 10) {
+                            var currentSeconds = await `0${currentDate.getSeconds()}`;
+                        } else {
+                            var currentSeconds = await currentDate.getSeconds();
+                        }
 
-                                const suratTimezone = 'Asia/Kolkata';
-                                const currentTimeInSurat = moment().tz(suratTimezone).format('YYYY-MM-DDTHH:mm:ss');
+                        const formattedDateTime = `${currentYear} ${currentMonth} ${currentDay} ${currentHours} ${currentMinutes} ${currentSeconds}`;
 
-                                const currentDate = new Date(currentTimeInSurat);
+                        const files = req.files;
 
-                                var currentYear = await currentDate.getFullYear();
-                                var currentMonth;
-                                var currentDay;
-                                var currentHours;
-                                var currentMinutes;
-                                var currentSeconds;
+                        const locations = [];
 
-                                if (currentDate.getMonth() < 10) {
-                                    var currentMonth = await `0${currentDate.getMonth() + 1}`;
-                                } else {
-                                    var currentMonth = await currentDate.getMonth() + 1;
-                                }
+                        for (let i = 0; i < files.length; i++) {
 
-                                if (currentDate.getDate() < 10) {
-                                    var currentDay = await `0${currentDate.getDate()}`;
-                                } else {
-                                    var currentDay = await currentDate.getDate();
-                                }
+                            const file = files[i];
 
-                                if (currentDate.getHours() < 10) {
-                                    var currentHours = await `0${currentDate.getHours()}`;
-                                } else {
-                                    var currentHours = await currentDate.getHours();
-                                }
+                            const fileExt = path.extname(file.originalname);
+                            const fileName = formattedDateTime + (i + 1) + fileExt;
 
-                                if (currentDate.getMinutes() < 10) {
-                                    var currentMinutes = await `0${currentDate.getMinutes()}`;
-                                } else {
-                                    var currentMinutes = await currentDate.getMinutes();
-                                }
-
-                                if (currentDate.getSeconds() < 10) {
-                                    var currentSeconds = await `0${currentDate.getSeconds()}`;
-                                } else {
-                                    var currentSeconds = await currentDate.getSeconds();
-                                }
-
-                                const formattedDateTime = `${currentYear} ${currentMonth} ${currentDay} ${currentHours} ${currentMinutes} ${currentSeconds}`;
-
-                                const files = req.files;
-
-                                for (let i = 0; i < files.length; i++) {
-
-                                    const file = files[i];
-
-                                    const fileExt = path.extname(file.originalname);
-                                    const fileName = formattedDateTime + (i + 1) + fileExt;
-
-                                    const s3 = new AWS.S3({
-                                        accessKeyId: process.env.AWS_ACCESS_KEY,
-                                        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-                                    });
-
-                                    const params = {
-                                        Bucket: process.env.AWS_S3_BUCKET,
-                                        Key: `${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
-                                        Body: file.buffer,
-                                        ACL: 'public-read',
-                                        ContentType: file.mimetype,
-                                    };
-
-                                    const data = await s3.upload(params).promise();
-                                    var dataKey = data.Key
-                                    var pushDataLocation = `${PUSHDATALOCATION}/${dataKey}`
-                                    locations.push(pushDataLocation);
-
-                                }
-
-                                var IsOwnerCarBringer
-                                if (req.body.CarBringer == UserDataUsername) {
-                                    IsOwnerCarBringer = 1
-                                } else {
-                                    IsOwnerCarBringer = 0
-                                }
-
-                                if (UserData[0].VehicleDetail[0].RegistrationNumber == req.body.RegistrationNumber) {
-
-                                    let data2 = new Todo4({
-                                        CompanyName: UserData[0].VehicleDetail[0].CompanyName,
-                                        Model: UserData[0].VehicleDetail[0].Model,
-                                        RegistrationNumber: req.body.RegistrationNumber,
-                                        Color: UserData[0].VehicleDetail[0].Color,
-                                        CarPicture: locations,
-                                        Parklocation: Parklocation,
-                                        UpdatedParklocation: UpdatedParklocation[0],
-                                        CarBringer: req.body.CarBringer,
-                                        IsOwnerCarBringer: IsOwnerCarBringer,
-                                        CarParkBy: req.UserName,
-                                        status: "",
-                                        status2: "",
-                                        UserWaitTime: [],
-                                        TimeUpdateStatus: 0,
-                                        Member: response.data.message,
-                                        ValetStatus: 1,
-                                        ParkOutTime: "",
-                                        ParkInTime: "",
-                                        WaitTime: "",
-                                        CarPictureUploadStatus: "1"
-                                    });
-
-                                    await data2.save();
-
-                                } else {
-
-                                    let data2 = new Todo4({
-                                        CompanyName: UserData[0].VehicleDetail[1].CompanyName,
-                                        Model: UserData[0].VehicleDetail[1].Model,
-                                        RegistrationNumber: req.body.RegistrationNumber,
-                                        Color: UserData[0].VehicleDetail[1].Color,
-                                        CarPicture: locations,
-                                        Parklocation: Parklocation,
-                                        UpdatedParklocation: UpdatedParklocation[0],
-                                        CarBringer: req.body.CarBringer,
-                                        IsOwnerCarBringer: IsOwnerCarBringer,
-                                        CarParkBy: req.UserName,
-                                        status: "",
-                                        status2: "",
-                                        UserWaitTime: [],
-                                        TimeUpdateStatus: 0,
-                                        Member: response.data.message,
-                                        ValetStatus: 1,
-                                        ParkOutTime: "",
-                                        ParkInTime: "",
-                                        WaitTime: "",
-                                        CarPictureUploadStatus: "1"
-                                    });
-
-                                    await data2.save();
-
-                                }
-
-                            }
-
-                            User.ValetStatus = 1;
-                            await User.save();
-
-                            const postData = {
-                                RegistrationNumber: req.body.RegistrationNumber,
-                                Status: "",
-                            };
-
-                            const formattedDateTime2 = `${currentYear}-${currentMonth}-${currentDay}`;
-                            const formattedDateTime3 = `${currentHours}:${currentMinutes}:${currentSeconds}`;
-
-                            let data222 = new Todo10({
-                                Date: formattedDateTime2,
-                                Time: formattedDateTime3,
-                                Pictures: locations,
-                                RegistrationNumber: req.body.RegistrationNumber,
-                                UserAction: "ParkIn"
+                            const s3 = new AWS.S3({
+                                accessKeyId: process.env.AWS_ACCESS_KEY,
+                                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
                             });
 
-                            await data222.save();
+                            const params = {
+                                Bucket: process.env.AWS_S3_BUCKET,
+                                Key: `${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
+                                Body: file.buffer,
+                                ACL: 'public-read',
+                                ContentType: file.mimetype,
+                            };
 
-                            axios.post(`${Ip}/StatusChange`, postData)
-                                .then(response => {
+                            const data = await s3.upload(params).promise();
+                            var dataKey = data.Key
+                            var pushDataLocation = `${PUSHDATALOCATION}/${dataKey}`
+                            locations.push(pushDataLocation);
 
-                                    var a = { "message": "Valet upload Car Picture Sucessfully", "status": `${HTTP.SUCCESS}` }
-                                    res.status(HTTP.SUCCESS).json(a);
+                        }
 
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                });
+                        const postData2 = {
+                            RegistrationNumber: req.body.RegistrationNumber,
+                        };
+
+                        const response = await axios.post(`${Ip}/NumberToMember`, postData2);
+
+                        const postData = {
+                            RegistrationNumber: req.body.RegistrationNumber,
+                            Status: "Parked",
+                            Status2: "",
+                        };
+
+                        var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
+
+                        if (ParkedCar1.length !== 0) {
+
+                            await Todo8.findOneAndUpdate({ Username: req.UserName }, {
+                                $set: {
+                                    ValetStatus: 0
+                                }
+                            }, { returnOriginal: false })
+
+                            // ParkedCar1[0].valetTicketPicture = a;
+                            ParkedCar1[0].valetTicketPicture = locations;
+                            ParkedCar1[0].ParkInTime = currentTimeInSurat;
+                            ParkedCar1[0].status = "Parked";
+                            // ParkedCar1[0].status2 = "Parked";
+                            ParkedCar1[0].CarPictureUploadStatus = "0"
+
+                            ParkedCar1[0].save();
+
+                            let data2 = new Todo7({
+                                UserName: response.data.message[0],
+                                Message: "Car is parked",
+                                ParkInTime: currentTimeInSurat
+                            });
+
+                            await data2.save();
+
+                            async function fetchData() {
+                                try {
+
+                                    const response = await axios.post(`${Ip}/NumberToMember`, postData);
+
+                                    if (response.status === 200) {
+
+                                        const UserNameData = response.data.message[0];
+
+                                        var FcmTokenUser = await Todo.find({ UserName: UserNameData })
+
+                                        var array1 = await FcmTokenUser[0].ActiveParkingUser;
+                                        var RemoveElement = await ParkedCar1[0].CarBringer;
+
+                                        FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
+                                            return item !== RemoveElement
+                                        })
+
+                                        await FcmTokenUser[0].save();
+
+                                        // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
+                                        // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
+                                        // await FcmTokenUser[0].save();
+
+                                        var FcmToken = await FcmTokenUser[0].Fcm;
+
+                                        axios.post(`${Ip}/StatusChange`, postData)
+                                            .then(response => {
+
+                                                const message = {
+                                                    notification: {
+                                                        title: 'Your vehicle is parked, Thank You',
+                                                        sound: 'default'
+                                                    },
+                                                    android: {
+                                                        notification: {
+                                                            sound: 'default'
+                                                        }
+                                                    },
+                                                    apns: {
+                                                        payload: {
+                                                            aps: {
+                                                                sound: 'default'
+                                                            }
+                                                        }
+                                                    },
+                                                    token: FcmToken,
+                                                };
+
+                                                fcm.send(message)
+                                                    .then((response) => {
+
+                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                        res.status(HTTP.SUCCESS).json(a);
+
+                                                    })
+                                                    .catch((error) => {
+
+                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                        res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                                                    });
+
+
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                            });
+
+                                    } else {
+                                        console.error('Request failed with status code:', response.status);
+                                    }
+
+                                } catch (error) {
+                                    console.error('An error occurred:', error);
+                                }
+                            }
+
+                            fetchData();
 
                         } else {
-                            var a = { "message": "Please Upload Valet Tickiet Picture", "status": `${HTTP.SUCCESS}` }
-                            res.status(HTTP.SUCCESS).json(a);
+                            var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
+                            res.status(HTTP.NOT_FOUND).json(a);
                         }
 
                     } else {
