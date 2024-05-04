@@ -1149,7 +1149,7 @@ class class1 {
                                             fcm.send(message)
                                                 .then((response) => {
 
-                                                    var a = { "message": "Wallet Can Take Action Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                    var a = { "message": "Your request has been accepted. Thank you", "status": `${HTTP.SUCCESS}` }
                                                     res.status(HTTP.SUCCESS).json(a);
 
                                                 })
@@ -2208,7 +2208,7 @@ class class1 {
                                         fcm.send(message)
                                             .then((response) => {
 
-                                                var a = { "message": "Vehicle Deliver & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.SUCCESS}` }
                                                 res.status(HTTP.SUCCESS).json(a);
 
                                             })
@@ -4653,7 +4653,7 @@ class class2 {
                                             fcm.send(message)
                                                 .then((response) => {
 
-                                                    var a = { "message": "Wallet Can Take Action Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                    var a = { "message": "Your request has been accepted. Thank you", "status": `${HTTP.SUCCESS}` }
                                                     res.status(HTTP.SUCCESS).json(a);
 
                                                 })
@@ -5733,7 +5733,7 @@ class class2 {
                                         fcm.send(message)
                                             .then((response) => {
 
-                                                var a = { "message": "Vehicle Deliver & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.SUCCESS}` }
                                                 res.status(HTTP.SUCCESS).json(a);
 
                                             })

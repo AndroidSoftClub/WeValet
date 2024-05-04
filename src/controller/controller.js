@@ -1469,7 +1469,7 @@ class class1 {
                             axios.post(`${Ip}/StatusChange`, postData)
                                 .then(response => {
 
-                                    var a = { "message": "Valet upload Car Picture Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                    var a = { "message": "Car entry picture uploaded successfully.", "status": `${HTTP.SUCCESS}` }
                                     res.status(HTTP.SUCCESS).json(a);
 
                                 })
@@ -1928,13 +1928,13 @@ class class1 {
                                                 fcm.send(message)
                                                     .then((response) => {
 
-                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                        var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
                                                         res.status(HTTP.SUCCESS).json(a);
 
                                                     })
                                                     .catch((error) => {
 
-                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                        var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                         res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
                                                     });
 
@@ -2425,7 +2425,7 @@ class class1 {
                                             fcm.send(message)
                                                 .then((response) => {
 
-                                                    var a = { "message": "Wallet Can Take Action Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                    var a = { "message": "Your request has been accepted. Thank you", "status": `${HTTP.SUCCESS}` }
                                                     res.status(HTTP.SUCCESS).json(a);
 
                                                 })
@@ -4469,7 +4469,7 @@ class class1 {
     };
     static O = async (req, res) => {
         try {
-
+            var userName = ""
             if (req.UserName) {
 
                 var User = await Todo.find({});
@@ -4479,17 +4479,23 @@ class class1 {
 
                 for (var i = 0; i < User.length; i++) {
 
-                    // var Member = [];
+                    var Member = [];
 
-                    // if (User[i].Member) {
+                    if (User[i].Member) {
 
-                    // await Member.push(User[i].UserName);
+                        // await Member.push(User[i].UserName);
+                        // console.log(User[i].UserName)
+                        // User[i].UserName
 
-                    // for (var j = 0; j < User[i].Member.length; j++) {
-                    //     await Member.push(User[i].Member[j][0].Name);
-                    // }
+                        for (var j = 0; j < User[i].VehicleDetail.length; j++) {
+                            // await Member.push(User[i].Member[j][0].Name);
+                            if (User[i].VehicleDetail[j].RegistrationNumber == req.body.RegistrationNumber) {
+                                userName = User[i].UserName
+                                console.log(User[i].UserName)
+                            }
+                        }
 
-                    // }
+                    }
 
                     var Member = await User[i].ActiveParkingUser
 
@@ -4497,13 +4503,13 @@ class class1 {
 
                         if (User[i].VehicleDetail[0]) {
                             await Vehicles.push(User[i].VehicleDetail[0].RegistrationNumber);
-                            User[i].VehicleDetail[0].Member = await Member;
+                            User[i].VehicleDetail[0].Member = userName;
                             await Vehicles2.push(User[i].VehicleDetail[0]);
                         }
 
                         if (User[i].VehicleDetail[1]) {
                             await Vehicles.push(User[i].VehicleDetail[1].RegistrationNumber);
-                            User[i].VehicleDetail[1].Member = await Member;
+                            User[i].VehicleDetail[1].Member = userName;
                             await Vehicles2.push(User[i].VehicleDetail[1]);
                         }
 
@@ -4907,7 +4913,7 @@ class class1 {
                                         fcm.send(message)
                                             .then((response) => {
 
-                                                var a = { "message": "Vehicle Deliver & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.SUCCESS}` }
                                                 res.status(HTTP.SUCCESS).json(a);
 
                                             })
