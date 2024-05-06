@@ -651,7 +651,7 @@ class class1 {
                                             fcm.send(message)
                                                 .then((response) => {
 
-                                                    var a = { "message": "Valet Parked Car Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                    var a = { "message": "Valet Parked Car Sucessfully & Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                                                     res.status(HTTP.SUCCESS).json(a);
 
                                                 })
@@ -853,7 +853,7 @@ class class1 {
                                                 fcm.send(message)
                                                     .then((response) => {
     
-                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                                                         res.status(HTTP.SUCCESS).json(a);
     
                                                     })
@@ -1005,7 +1005,7 @@ class class1 {
                                         fcm.sendMulticast(message2)
                                             .then((response) => {
 
-                                                var a = { "message": "User Can Send Request Sucessfully & Notification Send Sucessfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                var a = { "message": "User Can Send Request Sucessfully & Notification sent successfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
 
                                             })
@@ -1013,14 +1013,14 @@ class class1 {
 
                                                 console.error('Error sending notifications:', error);
 
-                                                var a = { "message": "User Can Send Request Sucessfully & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                var a = { "message": "Vehicle request sent successfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
 
                                             });
 
                                     })
                                     .catch((error) => {
-                                        var a = { "message": "User Can Send Request Sucessfully & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                        var a = { "message": "Vehicle request sent successfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                         res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
                                     });
 
@@ -2213,7 +2213,7 @@ class class1 {
 
                                             })
                                             .catch((error) => {
-                                                var a = { "message": "Vehicle Deliver & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
                                             });
 
@@ -2325,7 +2325,7 @@ class class1 {
                                 fcm.sendMulticast(message2)
                                     .then((response) => {
 
-                                        var a = { "message": "Request Cancle Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                        var a = { "message": "Request Cancle Sucessfully & Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                                         res.status(HTTP.SUCCESS).json(a);
 
                                     })
@@ -2680,7 +2680,7 @@ class class1 {
                 fcm.send(message)
                     .then((response) => {
 
-                        var a = { "message": "Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                        var a = { "message": "Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                         res.status(HTTP.SUCCESS).json(a);
 
                     })
@@ -4155,7 +4155,7 @@ class class2 {
                                             fcm.send(message)
                                                 .then((response) => {
 
-                                                    var a = { "message": "Valet Parked Car Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                    var a = { "message": "Valet Parked Car Sucessfully & Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                                                     res.status(HTTP.SUCCESS).json(a);
 
                                                 })
@@ -4357,7 +4357,7 @@ class class2 {
                                                 fcm.send(message)
                                                     .then((response) => {
     
-                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                                        var a = { "message": "Valet Parked Car Sucessfully & Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                                                         res.status(HTTP.SUCCESS).json(a);
     
                                                     })
@@ -4509,7 +4509,7 @@ class class2 {
                                         fcm.sendMulticast(message2)
                                             .then((response) => {
 
-                                                var a = { "message": "User Can Send Request Sucessfully & Notification Send Sucessfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                var a = { "message": "User Can Send Request Sucessfully & Notification sent successfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
 
                                             })
@@ -4517,14 +4517,14 @@ class class2 {
 
                                                 console.error('Error sending notifications:', error);
 
-                                                var a = { "message": "User Can Send Request Sucessfully & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                var a = { "message": "Vehicle request sent successfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
 
                                             });
 
                                     })
                                     .catch((error) => {
-                                        var a = { "message": "User Can Send Request Sucessfully & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                        var a = { "message": "Vehicle request sent successfully", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                         res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
                                     });
 
@@ -5738,7 +5738,7 @@ class class2 {
 
                                             })
                                             .catch((error) => {
-                                                var a = { "message": "Vehicle Deliver & Notification Does Not Send", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
                                             });
 
@@ -5850,7 +5850,7 @@ class class2 {
                                 fcm.sendMulticast(message2)
                                     .then((response) => {
 
-                                        var a = { "message": "Request Cancle Sucessfully & Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                                        var a = { "message": "Request Cancle Sucessfully & Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                                         res.status(HTTP.SUCCESS).json(a);
 
                                     })
@@ -6205,7 +6205,7 @@ class class2 {
                 fcm.send(message)
                     .then((response) => {
 
-                        var a = { "message": "Notification Send Sucessfully", "status": `${HTTP.SUCCESS}` }
+                        var a = { "message": "Notification sent successfully", "status": `${HTTP.SUCCESS}` }
                         res.status(HTTP.SUCCESS).json(a);
 
                     })
