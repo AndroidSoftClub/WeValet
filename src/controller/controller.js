@@ -7251,7 +7251,13 @@ class class2 {
 
                         }
 
-                        var message = { "message": "Data Load Successfully", "data": SendData2, "status": `${HTTP.SUCCESS}` }
+                        var newsortarray = [];
+                        
+                        newsortarray.push(SendData2[2])
+                        newsortarray.push(SendData2[0])
+                        newsortarray.push(SendData2[1])
+
+                        var message = { "message": "Data Load Successfully", "data": newsortarray, "status": `${HTTP.SUCCESS}` }
                         res.status(HTTP.SUCCESS).json(message);
 
                     }
