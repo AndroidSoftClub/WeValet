@@ -4476,6 +4476,7 @@ class class1 {
 
                 var Vehicles = [];
                 var Vehicles2 = [];
+                var AllMember = [];
 
                 for (var i = 0; i < User.length; i++) {
 
@@ -4491,7 +4492,22 @@ class class1 {
                             // await Member.push(User[i].Member[j][0].Name);
                             if (User[i].VehicleDetail[j].RegistrationNumber == req.body.RegistrationNumber) {
                                 userName = User[i].UserName
-                                console.log(User[i].UserName)
+                                AllMember.push(userName)
+                                // console.log(userName)
+                                for (var l = 0; l < User[i].ActiveParkingUser.length; l++) {
+
+                                    if(userName != User[i].ActiveParkingUser[l]){
+                                        console.log("Inner Array: " + User[i].ActiveParkingUser[l])
+                                        await AllMember.push(User[i].ActiveParkingUser[l])
+                                    }
+
+                                    // if (User[i].Member[l].name === 'undefined') {
+                                    //     await AllMember.push(User[i].Member[l].name)
+                                    // } else {
+                                    //     // console.log(User[i].Member[l].name)
+
+                                    // }
+                                }
                             }
                         }
 
@@ -4503,13 +4519,13 @@ class class1 {
 
                         if (User[i].VehicleDetail[0]) {
                             await Vehicles.push(User[i].VehicleDetail[0].RegistrationNumber);
-                            User[i].VehicleDetail[0].Member = userName;
+                            User[i].VehicleDetail[0].Member = AllMember;
                             await Vehicles2.push(User[i].VehicleDetail[0]);
                         }
 
                         if (User[i].VehicleDetail[1]) {
                             await Vehicles.push(User[i].VehicleDetail[1].RegistrationNumber);
-                            User[i].VehicleDetail[1].Member = userName;
+                            User[i].VehicleDetail[1].Member = AllMember;
                             await Vehicles2.push(User[i].VehicleDetail[1]);
                         }
 
@@ -4531,6 +4547,8 @@ class class1 {
                     const index = findIndexInArray(Vehicles, req.body.RegistrationNumber);
 
                     var data = Vehicles2[index];
+
+                    console.log(AllMember)
 
                     var message2 = { "message": "Valid Car", "data": data, "status": `${HTTP.SUCCESS}` }
                     res.status(HTTP.SUCCESS).json(message2);
@@ -7252,7 +7270,7 @@ class class2 {
                         }
 
                         var newsortarray = [];
-                        
+
                         newsortarray.push(SendData2[2])
                         newsortarray.push(SendData2[0])
                         newsortarray.push(SendData2[1])
@@ -7263,10 +7281,8 @@ class class2 {
                     }
 
                 } else {
-
                     var a = { "message": "Account Not Exist", "status": `${HTTP.NOT_FOUND}` }
                     res.status(HTTP.NOT_FOUND).json(a);
-
                 }
 
             } else if (req.UserName) {
