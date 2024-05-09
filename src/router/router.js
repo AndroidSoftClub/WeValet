@@ -29,7 +29,7 @@ function verifyToken(req, res, next) {
     next();
   });
 }
-
+router.post("/tokenqrdata", verifyToken, class1.tokenqrdata);
 router.post("/CreateUser", upload.array("picture"), class1.a);
 router.post("/qrcodebynumber", class1.qrcode);
 router.get("/demo", class1.demo);

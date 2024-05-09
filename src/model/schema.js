@@ -29,8 +29,8 @@ var UserSchema = new mongoose.Schema({
     Member: Array,
     StatusChange: String,
   }],
-  Member:Array,
-  ActiveParkingUser:Array,
+  Member: Array,
+  ActiveParkingUser: Array,
   Promocode: {
     type: String,
   },
@@ -126,7 +126,7 @@ const BusinessSchema = new mongoose.Schema({
   ForgetPasswordOtp: {
     type: String,
   },
-  Email:{
+  Email: {
     type: String,
   },
   OfficialPhone: {
@@ -141,10 +141,10 @@ const BusinessSchema = new mongoose.Schema({
   State: {
     type: String,
   },
-  City:{
+  City: {
     type: String,
   },
-  UserWaitTime:[{
+  UserWaitTime: [{
     data: Buffer,
     contentType: String,
     Monday: Array,
@@ -266,10 +266,10 @@ const ParkDetailSchema = new mongoose.Schema({
   CarPickBy: String,
   CarDeliverkBy: String,
   ParkOutTime: String,
-  TimeUpdateStatus:String,
-  WaitTime:String,
+  TimeUpdateStatus: String,
+  WaitTime: String,
   leaveTimeCounter: String,
-  RequestTimeDate:String,
+  RequestTimeDate: String,
   UpdateTimeDate: String,
   Member: Array,
   TotleParkRRequestedLength: String,
@@ -288,7 +288,7 @@ const CompanyDetailSchema = new mongoose.Schema({
 });
 
 const Todo5 = mongoose.model('CompanyDetailCollection', CompanyDetailSchema); // One Company Name is Multiple ( 3 ) Times and i have find jeep 2 Time
- 
+
 var IntimateSchema = new mongoose.Schema({
   Date: {
     type: String,
@@ -299,20 +299,20 @@ var IntimateSchema = new mongoose.Schema({
   NotiFicationGetTime: {
     type: String,
   },
-  NotiFicationGetDate:{
+  NotiFicationGetDate: {
     type: String,
   },
   Phone: {
     type: String,
     required: true,
   },
-  TotleParkRRequestedLength:{
+  TotleParkRRequestedLength: {
     type: String,
   },
-  ReceiverUserName:{
+  ReceiverUserName: {
     type: String,
   },
-  SenderUserName:{
+  SenderUserName: {
     type: String,
   }
 });
@@ -332,10 +332,10 @@ var NotificationSchema = new mongoose.Schema({
   NotificationRemainingTime: {
     type: String,
   },
-  BusinessUserName:{
+  BusinessUserName: {
     type: String,
   },
-  RegistrationNumber:{
+  RegistrationNumber: {
     type: String,
   }
 });
@@ -376,16 +376,16 @@ var ValetSchema = new mongoose.Schema({
   Status: {
     type: String,
   },
-  TotleParkRRequestedLength:{
+  TotleParkRRequestedLength: {
     type: String,
   },
   ForgetPasswordOtp: {
     type: String,
   },
-  ValetStatus:{
+  ValetStatus: {
     type: String,
   },
-  BusinessUserName:{
+  BusinessUserName: {
     type: String,
   },
   Profile: {
@@ -399,7 +399,29 @@ var ValetSchema = new mongoose.Schema({
   }
 });
 
+
+
 var Todo8 = mongoose.model("ValetCollection", ValetSchema);
+
+var carParkInToken = new mongoose.Schema({
+  tokennumber: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  vehicalnumber: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  randomnumber: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+});
+
+var Todo15 = mongoose.model("carparkqrdata", carParkInToken);
 
 var PaymentSchema = new mongoose.Schema({
   Plan: {
@@ -444,4 +466,4 @@ var PictureSchema = new mongoose.Schema({
 
 var Todo10 = mongoose.model("PictureCollection", PictureSchema);
 
-module.exports = { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10 };
+module.exports = { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10, Todo15 };

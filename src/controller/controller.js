@@ -1,4 +1,4 @@
-var { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10 } = require("../model/schema");
+var { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10,Todo15 } = require("../model/schema");
 const HTTP = require("../../constant/response.constant");
 var QRCode = require('qrcode')
 
@@ -1261,6 +1261,30 @@ class class1 {
     //         res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
     //     }
     // };
+
+    static tokenqrdata = async (req, res) => {
+        try {
+            console.log(req.body);
+            
+            let data2 = new Todo15({
+                tokennumber: req.body.tokennumber,
+                vehicalnumber: req.body.vehicalnumber,
+                randomnumber: req.body.randomnumber,
+            });
+
+            await data2.save();
+
+            var a = { "message": `Status OK`, "status": `${HTTP.SUCCESS}` }
+            res.status(HTTP.SUCCESS).json(a);
+
+
+        } catch (e) {
+            console.log(e);
+            var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+            res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+        }
+    };
+
     static i = async (req, res) => {
         try {
 
@@ -4019,7 +4043,6 @@ class class1 {
                             element.kilometer = geolib.getDistance(targetLocation, element.location) / 1000;
                             element.Distance = element.kilometer.toFixed(2) + " KM";
                         }
-
                     });
 
                     var DataArray = [];
@@ -4031,9 +4054,7 @@ class class1 {
                             if (0 < transformedData[i].kilometer) {
                                 await DataArray.push(transformedData[i]);
                             }
-
                         }
-
                     }
 
                     transformedData.sort((a, b) => a.kilometer - b.kilometer);
@@ -4496,7 +4517,7 @@ class class1 {
                                 // console.log(userName)
                                 for (var l = 0; l < User[i].ActiveParkingUser.length; l++) {
 
-                                    if(userName != User[i].ActiveParkingUser[l]){
+                                    if (userName != User[i].ActiveParkingUser[l]) {
                                         console.log("Inner Array: " + User[i].ActiveParkingUser[l])
                                         await AllMember.push(User[i].ActiveParkingUser[l])
                                     }
@@ -4528,9 +4549,7 @@ class class1 {
                             User[i].VehicleDetail[1].Member = AllMember;
                             await Vehicles2.push(User[i].VehicleDetail[1]);
                         }
-
                     }
-
                 }
 
                 if (Vehicles.includes(req.body.RegistrationNumber)) {
