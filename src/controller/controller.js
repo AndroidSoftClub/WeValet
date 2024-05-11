@@ -1,4 +1,4 @@
-var { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10,Todo15 } = require("../model/schema");
+var { Todo, Todo2, Todo3, Todo4, Todo5, Todo6, Todo7, Todo8, Todo9, Todo10, Todo15 } = require("../model/schema");
 const HTTP = require("../../constant/response.constant");
 var QRCode = require('qrcode')
 
@@ -1265,18 +1265,23 @@ class class1 {
     static tokenqrdata = async (req, res) => {
         try {
             console.log(req.body);
-            
-            let data2 = new Todo15({
-                tokennumber: req.body.tokennumber,
-                vehicalnumber: req.body.vehicalnumber,
-                randomnumber: req.body.randomnumber,
-            });
 
-            await data2.save();
+            let data2 = new Todo15({ vehicalnumber: req.body.vehicalnumber })
 
-            var a = { "message": `Status OK`, "status": `${HTTP.SUCCESS}` }
-            res.status(HTTP.SUCCESS).json(a);
+            console.log(data2);
 
+            if (data2) {
+
+            } else {
+                let data3 = new Todo15({
+                    tokennumber: req.body.tokennumber,
+                    vehicalnumber: req.body.vehicalnumber,
+                    randomnumber: req.body.randomnumber,
+                });
+                await data3.save();
+                var a = { "message": `Status OK`, "status": `${HTTP.SUCCESS}` }
+                res.status(HTTP.SUCCESS).json(a);
+            }
 
         } catch (e) {
             console.log(e);
@@ -7439,7 +7444,7 @@ class class2 {
             const currentDate2 = await new Date();
 
             if (req.body.PlanType == "Single Payment") {
-                await currentDate.setMonth(currentDate.getMonth() + 1);
+                await currentDate.setMonth(currentDate);
             } else if (req.body.PlanType == "Half Yearly Payment") {
                 await currentDate.setMonth(currentDate.getMonth() + 6);
             } else {
@@ -7497,12 +7502,9 @@ class class2 {
                     res.status(HTTP.SUCCESS).json(a);
 
                 } else {
-
                     var a = { "message": "Account Not Exist", "status": `${HTTP.NOT_FOUND}` }
                     res.status(HTTP.NOT_FOUND).json(a);
-
                 }
-
             } else {
                 var a = { "message": "Insufficient Data", "status": `${HTTP.BAD_REQUEST}` }
                 res.status(HTTP.BAD_REQUEST).json(a);
@@ -7514,6 +7516,7 @@ class class2 {
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
+
     static z = async (req, res) => {
         try {
 
