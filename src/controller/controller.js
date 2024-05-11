@@ -7444,7 +7444,7 @@ class class2 {
             const currentDate2 = await new Date();
 
             if (req.body.PlanType == "Single Payment") {
-                await currentDate.setMonth(currentDate.getMonth() + 1);
+                await currentDate.setMonth(currentDate.getMonth());
             } else if (req.body.PlanType == "Half Yearly Payment") {
                 await currentDate.setMonth(currentDate.getMonth() + 6);
             } else {
