@@ -7444,7 +7444,7 @@ class class2 {
             const currentDate2 = await new Date();
 
             if (req.body.PlanType == "Single Payment") {
-                await currentDate.setMonth(currentDate);
+                await currentDate.setMonth(currentDate.getMonth() + 1);
             } else if (req.body.PlanType == "Half Yearly Payment") {
                 await currentDate.setMonth(currentDate.getMonth() + 6);
             } else {
@@ -7502,9 +7502,12 @@ class class2 {
                     res.status(HTTP.SUCCESS).json(a);
 
                 } else {
+
                     var a = { "message": "Account Not Exist", "status": `${HTTP.NOT_FOUND}` }
                     res.status(HTTP.NOT_FOUND).json(a);
+
                 }
+
             } else {
                 var a = { "message": "Insufficient Data", "status": `${HTTP.BAD_REQUEST}` }
                 res.status(HTTP.BAD_REQUEST).json(a);
@@ -7516,7 +7519,6 @@ class class2 {
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
-
     static z = async (req, res) => {
         try {
 
