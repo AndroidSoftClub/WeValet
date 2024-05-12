@@ -91,9 +91,9 @@ function formatPhoneNumber(number, number2) {
 
 const twilio = require('twilio');
 
-const accountSid = process.env.AccountSid;
-const authToken = process.env.AuthToken;
-const client = twilio(accountSid, authToken);
+// const accountSid = process.env.AccountSid;
+// const authToken = process.env.AuthToken;
+// const client = twilio(accountSid, authToken);
 
 class class1 {
     static a = async (req, res) => {
@@ -528,7 +528,7 @@ class class1 {
     static d = async (req, res) => {
         try {
             if (req.body.Phone) {
-
+                console.log(req.body.Phone)
                 var user = await Todo.find({ Phone: req.body.Phone });
                 if (user.length == 0) {
                     var a = { "message": "Account Not Exist", "status": `${HTTP.NOT_FOUND}` }
@@ -552,6 +552,7 @@ class class1 {
                     var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
                     await updateuser.save();
 
+                    console.log("Data: " + PhoneNumberCheckOfficial)
 
                     if (PhoneNumberCheckOfficial == +91) {
 
@@ -568,44 +569,66 @@ class class1 {
                     } else {
                         // var updateuser = await Todo.findOneAndUpdate({ Phone: req.body.Phone }, { $set: { otp: otp } });
                         // await updateuser.save();
-                        // async function convertPhoneNumber(Parameter1) {
+                        async function convertPhoneNumber(Parameter1) {
 
-                        //     let stringWithoutSpaces = await Parameter1.replace(/\s/g, "");
-                        //     let stringWithoutDashes = await stringWithoutSpaces.replace(/-/g, "");
+                            let stringWithoutSpaces = await Parameter1.replace(/\s/g, "");
+                            let stringWithoutDashes = await stringWithoutSpaces.replace(/-/g, "");
 
-                        //     let cleanedNumber = await stringWithoutDashes.replace(/\D/g, '').replace(/^(\+)?1/, '');
+                            let cleanedNumber = await stringWithoutDashes.replace(/\D/g, '').replace(/^(\+)?1/, '');
 
-                        //     // Add the country code
-                        //     cleanedNumber = "+1" + cleanedNumber;
+                            // Add the country code
+                            cleanedNumber = "+1" + cleanedNumber;
 
-                        //     return cleanedNumber;
-                        // }
+                            return cleanedNumber;
+                        }
 
-                        // let formattedNumber = await convertPhoneNumber(PhoneNumberCheck);
+                        let formattedNumber = await convertPhoneNumber(PhoneNumberCheck);
 
-                        var TwillowPhoneNumber = process.env.PhoneNumber || '+13254426364';
-                        var PhoneNumberCheck = "+919106850877"
+                        // var TwillowPhoneNumber = process.env.PhoneNumber || '+13254426364';
+                        // var PhoneNumberCheck = "+919106850877"
 
-                        client.messages
-                            .create({
-                                body: `WEVALET: ${otp} is your OTP for the login . This OTP is valid only for 2 min. 
-                                By Apti Enterprises LLC`,
-                                from: TwillowPhoneNumber, // Your Twilio phone number
-                                to: PhoneNumberCheck // Recipient's phone number
-                            })
-                            .then((message) => {
+                        // client.messages
+                        //     .create({
+                        //         body: `WEVALET: ${otp} is your OTP for the login . This OTP is valid only for 2 min. 
+                        //         By Apti Enterprises LLC`,
+                        //         from: TwillowPhoneNumber, // Your Twilio phone number
+                        //         to: PhoneNumberCheck // Recipient's phone number
+                        //     })
+                        //     .then((message) => {
+                        //         var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
+                        //         res.status(HTTP.SUCCESS).json(a);
+                        //     })
+                        //     .catch((error) => {
+                        //         console.error(`Error: ${error}`);
+                        //     });
 
+                        console.log("Formated: " + formattedNumber)
+
+                        var Otpmessage = "WEVALET: " + otp + " is your OTP for the login . This OTP is valid only for 2 min. By Apti Enterprises LLC"
+
+                        const headers = {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' +process.env.publicKey
+                        };
+
+                        // Define the raw body data you want to send in the request
+                        const rawBodyData = {
+                            from: process.env.PhoneNumber,
+                            to: formattedNumber,
+                            text: Otpmessage
+                        };
+
+                        const requestBody = JSON.stringify(rawBodyData);
+                        const apiUrl = 'https://api.telnyx.com/v2/messages';
+
+                        axios.post(apiUrl, requestBody, { headers })
+                            .then((response) => {
                                 var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
                                 res.status(HTTP.SUCCESS).json(a);
-
                             })
                             .catch((error) => {
                                 console.error(`Error: ${error}`);
                             });
-
-                        var a = { "message": "Otp Send", "status": `${HTTP.SUCCESS}` }
-                        res.status(HTTP.SUCCESS).json(a);
-
                     }
                 }
 
