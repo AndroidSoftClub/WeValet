@@ -1492,9 +1492,7 @@ class class1 {
                                     });
 
                                     await data2.save();
-
                                 }
-
                             }
 
                             User.ValetStatus = 1;
@@ -1793,6 +1791,8 @@ class class1 {
 
     static j = async (req, res) => {
         try {
+            
+            console.log("User Name: " + req.UserName)
             if (req.UserName) {
 
                 const headerValue = req.get('Authorization');
@@ -1903,114 +1903,219 @@ class class1 {
 
                         var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
 
-                        if (ParkedCar1.length !== 0) {
 
-                            await Todo8.findOneAndUpdate({ Username: req.UserName }, {
-                                $set: {
-                                    ValetStatus: 0
-                                }
-                            }, { returnOriginal: false })
 
-                            // ParkedCar1[0].valetTicketPicture = a;
-                            ParkedCar1[0].valetTicketPicture = locations;
-                            ParkedCar1[0].ParkInTime = currentTimeInSurat;
-                            ParkedCar1[0].status = "Parked";
-                            // ParkedCar1[0].status2 = "Parked";
-                            ParkedCar1[0].CarPictureUploadStatus = "0"
+                        await Todo8.findOneAndUpdate({ Username: req.UserName }, {
+                            $set: {
+                                ValetStatus: 0
+                            }
+                        }, { returnOriginal: false })
 
-                            ParkedCar1[0].save();
+                        // ParkedCar1[0].valetTicketPicture = a;
+                        ParkedCar1[0].valetTicketPicture = locations;
+                        ParkedCar1[0].ParkInTime = currentTimeInSurat;
+                        ParkedCar1[0].status = "Parked";
+                        // ParkedCar1[0].status2 = "Parked";
+                        ParkedCar1[0].CarPictureUploadStatus = "0"
 
-                            let data2 = new Todo7({
-                                UserName: response.data.message[0],
-                                Message: "Car is parked",
-                                ParkInTime: currentTimeInSurat
-                            });
+                        ParkedCar1[0].save();
 
-                            await data2.save();
+                        let data2 = new Todo7({
+                            UserName: response.data.message[0],
+                            Message: "Car is parked",
+                            ParkInTime: currentTimeInSurat
+                        });
 
-                            async function fetchData() {
-                                try {
+                        await data2.save();
 
-                                    const response = await axios.post(`${Ip}/NumberToMember`, postData);
+                        async function fetchData() {
+                            try {
 
-                                    if (response.status === 200) {
+                                const response = await axios.post(`${Ip}/NumberToMember`, postData);
 
-                                        const UserNameData = response.data.message[0];
+                                if (response.status === 200) {
 
-                                        var FcmTokenUser = await Todo.find({ UserName: UserNameData })
+                                    const UserNameData = response.data.message[0];
 
-                                        var array1 = await FcmTokenUser[0].ActiveParkingUser;
-                                        var RemoveElement = await ParkedCar1[0].CarBringer;
+                                    var FcmTokenUser = await Todo.find({ UserName: UserNameData })
 
-                                        FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
-                                            return item !== RemoveElement
-                                        })
+                                    var array1 = await FcmTokenUser[0].ActiveParkingUser;
+                                    var RemoveElement = await ParkedCar1[0].CarBringer;
 
-                                        await FcmTokenUser[0].save();
+                                    FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
+                                        return item !== RemoveElement
+                                    })
 
-                                        // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
-                                        // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
-                                        // await FcmTokenUser[0].save();
+                                    await FcmTokenUser[0].save();
 
-                                        var FcmToken = await FcmTokenUser[0].Fcm;
+                                    // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
+                                    // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
+                                    // await FcmTokenUser[0].save();
 
-                                        axios.post(`${Ip}/StatusChange`, postData)
-                                            .then(response => {
+                                    var FcmToken = await FcmTokenUser[0].Fcm;
 
-                                                const message = {
+                                    axios.post(`${Ip}/StatusChange`, postData)
+                                        .then(response => {
+
+                                            const message = {
+                                                notification: {
+                                                    title: 'Your vehicle is parked, Thank You',
+                                                    sound: 'default'
+                                                },
+                                                android: {
                                                     notification: {
-                                                        title: 'Your vehicle is parked, Thank You',
                                                         sound: 'default'
-                                                    },
-                                                    android: {
-                                                        notification: {
+                                                    }
+                                                },
+                                                apns: {
+                                                    payload: {
+                                                        aps: {
                                                             sound: 'default'
                                                         }
-                                                    },
-                                                    apns: {
-                                                        payload: {
-                                                            aps: {
-                                                                sound: 'default'
-                                                            }
-                                                        }
-                                                    },
-                                                    token: FcmToken,
-                                                };
+                                                    }
+                                                },
+                                                token: FcmToken,
+                                            };
 
-                                                fcm.send(message)
-                                                    .then((response) => {
+                                            fcm.send(message)
+                                                .then((response) => {
 
-                                                        var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
-                                                        res.status(HTTP.SUCCESS).json(a);
+                                                    var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                                                    res.status(HTTP.SUCCESS).json(a);
 
-                                                    })
-                                                    .catch((error) => {
+                                                })
+                                                .catch((error) => {
 
-                                                        var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
-                                                        res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
-                                                    });
+                                                    var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                                                    res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                                                });
 
 
-                                            })
-                                            .catch(error => {
-                                                console.error('Error:', error);
-                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                        });
 
-                                    } else {
-                                        console.error('Request failed with status code:', response.status);
-                                    }
-
-                                } catch (error) {
-                                    console.error('An error occurred:', error);
+                                } else {
+                                    console.error('Request failed with status code:', response.status);
                                 }
+
+                            } catch (error) {
+                                console.error('An error occurred:', error);
                             }
-
-                            fetchData();
-
-                        } else {
-                            var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
-                            res.status(HTTP.NOT_FOUND).json(a);
                         }
+
+                        fetchData();
+
+                        
+                        // if (ParkedCar1.length !== 0) {
+
+                        //     await Todo8.findOneAndUpdate({ Username: req.UserName }, {
+                        //         $set: {
+                        //             ValetStatus: 0
+                        //         }
+                        //     }, { returnOriginal: false })
+
+                        //     // ParkedCar1[0].valetTicketPicture = a;
+                        //     ParkedCar1[0].valetTicketPicture = locations;
+                        //     ParkedCar1[0].ParkInTime = currentTimeInSurat;
+                        //     ParkedCar1[0].status = "Parked";
+                        //     // ParkedCar1[0].status2 = "Parked";
+                        //     ParkedCar1[0].CarPictureUploadStatus = "0"
+
+                        //     ParkedCar1[0].save();
+
+                        //     let data2 = new Todo7({
+                        //         UserName: response.data.message[0],
+                        //         Message: "Car is parked",
+                        //         ParkInTime: currentTimeInSurat
+                        //     });
+
+                        //     await data2.save();
+
+                        //     async function fetchData() {
+                        //         try {
+
+                        //             const response = await axios.post(`${Ip}/NumberToMember`, postData);
+
+                        //             if (response.status === 200) {
+
+                        //                 const UserNameData = response.data.message[0];
+
+                        //                 var FcmTokenUser = await Todo.find({ UserName: UserNameData })
+
+                        //                 var array1 = await FcmTokenUser[0].ActiveParkingUser;
+                        //                 var RemoveElement = await ParkedCar1[0].CarBringer;
+
+                        //                 FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
+                        //                     return item !== RemoveElement
+                        //                 })
+
+                        //                 await FcmTokenUser[0].save();
+
+                        //                 // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
+                        //                 // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
+                        //                 // await FcmTokenUser[0].save();
+
+                        //                 var FcmToken = await FcmTokenUser[0].Fcm;
+
+                        //                 axios.post(`${Ip}/StatusChange`, postData)
+                        //                     .then(response => {
+
+                        //                         const message = {
+                        //                             notification: {
+                        //                                 title: 'Your vehicle is parked, Thank You',
+                        //                                 sound: 'default'
+                        //                             },
+                        //                             android: {
+                        //                                 notification: {
+                        //                                     sound: 'default'
+                        //                                 }
+                        //                             },
+                        //                             apns: {
+                        //                                 payload: {
+                        //                                     aps: {
+                        //                                         sound: 'default'
+                        //                                     }
+                        //                                 }
+                        //                             },
+                        //                             token: FcmToken,
+                        //                         };
+
+                        //                         fcm.send(message)
+                        //                             .then((response) => {
+
+                        //                                 var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                        //                                 res.status(HTTP.SUCCESS).json(a);
+
+                        //                             })
+                        //                             .catch((error) => {
+
+                        //                                 var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
+                        //                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                        //                             });
+
+
+                        //                     })
+                        //                     .catch(error => {
+                        //                         console.error('Error:', error);
+                        //                     });
+
+                        //             } else {
+                        //                 console.error('Request failed with status code:', response.status);
+                        //             }
+
+                        //         } catch (error) {
+                        //             console.error('An error occurred:', error);
+                        //         }
+                        //     }
+
+                        //     fetchData();
+
+                        // } else {
+                        //     var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
+                        //     res.status(HTTP.NOT_FOUND).json(a);
+                        // }
 
                     } else {
                         var a = { "message": "Token has expired", "status": `${HTTP.UNAUTHORIZED}` }
@@ -7249,7 +7354,6 @@ class class2 {
                             //   return "Past"
                             return -1
                         }
-
                     }
 
                     const inputDateTime = await User.PlanExpiredDate;
@@ -7278,7 +7382,6 @@ class class2 {
                                     "OffAmount": SendData[i].OffAmount,
                                     "Active": 1
                                 }
-
                             } else {
 
                                 var ab = {
@@ -7291,9 +7394,7 @@ class class2 {
                                 }
 
                             }
-
                             await SendData2.push(ab);
-
                         }
 
                         var message = { "message": "Data Load Successfully", "data": SendData2, "status": `${HTTP.SUCCESS}` }
@@ -7313,7 +7414,6 @@ class class2 {
                             }
 
                             await SendData2.push(ab);
-
                         }
 
                         var newsortarray = [];
@@ -7324,9 +7424,8 @@ class class2 {
 
                         var message = { "message": "Data Load Successfully", "data": newsortarray, "status": `${HTTP.SUCCESS}` }
                         res.status(HTTP.SUCCESS).json(message);
-
                     }
-
+                    
                 } else {
                     var a = { "message": "Account Not Exist", "status": `${HTTP.NOT_FOUND}` }
                     res.status(HTTP.NOT_FOUND).json(a);
