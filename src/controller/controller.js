@@ -1886,7 +1886,6 @@ class class1 {
                             var dataKey = data.Key
                             var pushDataLocation = `${PUSHDATALOCATION}/${dataKey}`
                             locations.push(pushDataLocation);
-
                         }
 
                         const postData2 = {
@@ -1901,7 +1900,8 @@ class class1 {
                             Status2: "",
                         };
 
-                        var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
+                        // var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
+                        var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber })
 
                         await Todo8.findOneAndUpdate({ Username: req.UserName }, {
                             $set: {
@@ -1982,8 +1982,8 @@ class class1 {
 
                                                 })
                                                 .catch((error) => {
-                                                    var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
-                                                    res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                                                    var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                                                    res.status(HTTP.SUCCESS).json(a);
                                                 });
 
 
@@ -2127,7 +2127,7 @@ class class1 {
                 var a = { "message": "Insufficient Data", "status": `${HTTP.BAD_REQUEST}` }
                 res.status(HTTP.BAD_REQUEST).json(a);
             }
-            
+
         } catch (e) {
             console.log(e);
             var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
