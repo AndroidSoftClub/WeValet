@@ -608,7 +608,7 @@ class class1 {
 
                         const headers = {
                             'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' +process.env.publicKey
+                            'Authorization': 'Bearer ' + process.env.publicKey
                         };
 
                         // Define the raw body data you want to send in the request
@@ -1791,7 +1791,7 @@ class class1 {
 
     static j = async (req, res) => {
         try {
-            
+
             console.log("User Name: " + req.UserName)
             if (req.UserName) {
 
@@ -1903,8 +1903,6 @@ class class1 {
 
                         var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
 
-
-
                         await Todo8.findOneAndUpdate({ Username: req.UserName }, {
                             $set: {
                                 ValetStatus: 0
@@ -1979,13 +1977,11 @@ class class1 {
 
                                             fcm.send(message)
                                                 .then((response) => {
-
                                                     var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
                                                     res.status(HTTP.SUCCESS).json(a);
 
                                                 })
                                                 .catch((error) => {
-
                                                     var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
                                                     res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
                                                 });
@@ -2007,7 +2003,7 @@ class class1 {
 
                         fetchData();
 
-                        
+
                         // if (ParkedCar1.length !== 0) {
 
                         //     await Todo8.findOneAndUpdate({ Username: req.UserName }, {
@@ -2091,8 +2087,8 @@ class class1 {
                         //                             })
                         //                             .catch((error) => {
 
-                        //                                 var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
-                        //                                 res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                        //                                 var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                        //                                 res.status(HTTP.SUCCESS).json(a);
                         //                             });
 
 
@@ -2131,13 +2127,14 @@ class class1 {
                 var a = { "message": "Insufficient Data", "status": `${HTTP.BAD_REQUEST}` }
                 res.status(HTTP.BAD_REQUEST).json(a);
             }
-
+            
         } catch (e) {
             console.log(e);
             var a = { "message": `${e}`, "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
+
     static k = async (req, res) => {
         try {
 
@@ -5088,8 +5085,8 @@ class class1 {
 
                                             })
                                             .catch((error) => {
-                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.INTERNAL_SERVER_ERROR}` }
-                                                res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
+                                                var a = { "message": "Vehicle Delivered", "status": `${HTTP.SUCCESS}` }
+                                                res.status(HTTP.SUCCESS).json(a);
                                             });
 
                                     })
@@ -7425,7 +7422,7 @@ class class2 {
                         var message = { "message": "Data Load Successfully", "data": newsortarray, "status": `${HTTP.SUCCESS}` }
                         res.status(HTTP.SUCCESS).json(message);
                     }
-                    
+
                 } else {
                     var a = { "message": "Account Not Exist", "status": `${HTTP.NOT_FOUND}` }
                     res.status(HTTP.NOT_FOUND).json(a);
