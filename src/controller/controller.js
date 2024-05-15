@@ -1903,215 +1903,213 @@ class class1 {
                         // var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
                         var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber })
 
-                        await Todo8.findOneAndUpdate({ Username: req.UserName }, {
-                            $set: {
-                                ValetStatus: 0
-                            }
-                        }, { returnOriginal: false })
+                        // await Todo8.findOneAndUpdate({ Username: req.UserName }, {
+                        //     $set: {
+                        //         ValetStatus: 0
+                        //     }
+                        // }, { returnOriginal: false })
 
-                        // ParkedCar1[0].valetTicketPicture = a;
-                        ParkedCar1[0].valetTicketPicture = locations;
-                        ParkedCar1[0].ParkInTime = currentTimeInSurat;
-                        ParkedCar1[0].status = "Parked";
-                        // ParkedCar1[0].status2 = "Parked";
-                        ParkedCar1[0].CarPictureUploadStatus = "0"
+                        // // ParkedCar1[0].valetTicketPicture = a;
+                        // ParkedCar1[0].valetTicketPicture = locations;
+                        // ParkedCar1[0].ParkInTime = currentTimeInSurat;
+                        // ParkedCar1[0].status = "Parked";
+                        // // ParkedCar1[0].status2 = "Parked";
+                        // ParkedCar1[0].CarPictureUploadStatus = "0"
 
-                        ParkedCar1[0].save();
+                        // ParkedCar1[0].save();
 
-                        let data2 = new Todo7({
-                            UserName: response.data.message[0],
-                            Message: "Car is parked",
-                            ParkInTime: currentTimeInSurat
-                        });
+                        // let data2 = new Todo7({
+                        //     UserName: response.data.message[0],
+                        //     Message: "Car is parked",
+                        //     ParkInTime: currentTimeInSurat
+                        // });
 
-                        await data2.save();
+                        // await data2.save();
 
-                        async function fetchData() {
-                            try {
+                        // async function fetchData() {
+                        //     try {
 
-                                const response = await axios.post(`${Ip}/NumberToMember`, postData);
+                        //         const response = await axios.post(`${Ip}/NumberToMember`, postData);
 
-                                if (response.status === 200) {
+                        //         if (response.status === 200) {
 
-                                    const UserNameData = response.data.message[0];
+                        //             const UserNameData = response.data.message[0];
 
-                                    var FcmTokenUser = await Todo.find({ UserName: UserNameData })
+                        //             var FcmTokenUser = await Todo.find({ UserName: UserNameData })
 
-                                    var array1 = await FcmTokenUser[0].ActiveParkingUser;
-                                    var RemoveElement = await ParkedCar1[0].CarBringer;
+                        //             var array1 = await FcmTokenUser[0].ActiveParkingUser;
+                        //             var RemoveElement = await ParkedCar1[0].CarBringer;
 
-                                    FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
-                                        return item !== RemoveElement
-                                    })
+                        //             FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
+                        //                 return item !== RemoveElement
+                        //             })
 
-                                    await FcmTokenUser[0].save();
+                        //             await FcmTokenUser[0].save();
 
-                                    // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
-                                    // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
-                                    // await FcmTokenUser[0].save();
+                        //             // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
+                        //             // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
+                        //             // await FcmTokenUser[0].save();
 
-                                    var FcmToken = await FcmTokenUser[0].Fcm;
+                        //             var FcmToken = await FcmTokenUser[0].Fcm;
 
-                                    axios.post(`${Ip}/StatusChange`, postData)
-                                        .then(response => {
+                        //             axios.post(`${Ip}/StatusChange`, postData)
+                        //                 .then(response => {
 
-                                            const message = {
-                                                notification: {
-                                                    title: 'Your vehicle is parked, Thank You',
-                                                    sound: 'default'
-                                                },
-                                                android: {
-                                                    notification: {
-                                                        sound: 'default'
-                                                    }
-                                                },
-                                                apns: {
-                                                    payload: {
-                                                        aps: {
-                                                            sound: 'default'
-                                                        }
-                                                    }
-                                                },
-                                                token: FcmToken,
-                                            };
-
-                                            fcm.send(message)
-                                                .then((response) => {
-                                                    var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
-                                                    res.status(HTTP.SUCCESS).json(a);
-
-                                                })
-                                                .catch((error) => {
-                                                    var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
-                                                    res.status(HTTP.SUCCESS).json(a);
-                                                });
-
-
-                                        })
-                                        .catch(error => {
-                                            console.error('Error:', error);
-                                        });
-
-                                } else {
-                                    console.error('Request failed with status code:', response.status);
-                                }
-
-                            } catch (error) {
-                                console.error('An error occurred:', error);
-                            }
-                        }
-
-                        fetchData();
-
-
-                        // if (ParkedCar1.length !== 0) {
-
-                        //     await Todo8.findOneAndUpdate({ Username: req.UserName }, {
-                        //         $set: {
-                        //             ValetStatus: 0
-                        //         }
-                        //     }, { returnOriginal: false })
-
-                        //     // ParkedCar1[0].valetTicketPicture = a;
-                        //     ParkedCar1[0].valetTicketPicture = locations;
-                        //     ParkedCar1[0].ParkInTime = currentTimeInSurat;
-                        //     ParkedCar1[0].status = "Parked";
-                        //     // ParkedCar1[0].status2 = "Parked";
-                        //     ParkedCar1[0].CarPictureUploadStatus = "0"
-
-                        //     ParkedCar1[0].save();
-
-                        //     let data2 = new Todo7({
-                        //         UserName: response.data.message[0],
-                        //         Message: "Car is parked",
-                        //         ParkInTime: currentTimeInSurat
-                        //     });
-
-                        //     await data2.save();
-
-                        //     async function fetchData() {
-                        //         try {
-
-                        //             const response = await axios.post(`${Ip}/NumberToMember`, postData);
-
-                        //             if (response.status === 200) {
-
-                        //                 const UserNameData = response.data.message[0];
-
-                        //                 var FcmTokenUser = await Todo.find({ UserName: UserNameData })
-
-                        //                 var array1 = await FcmTokenUser[0].ActiveParkingUser;
-                        //                 var RemoveElement = await ParkedCar1[0].CarBringer;
-
-                        //                 FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
-                        //                     return item !== RemoveElement
-                        //                 })
-
-                        //                 await FcmTokenUser[0].save();
-
-                        //                 // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
-                        //                 // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
-                        //                 // await FcmTokenUser[0].save();
-
-                        //                 var FcmToken = await FcmTokenUser[0].Fcm;
-
-                        //                 axios.post(`${Ip}/StatusChange`, postData)
-                        //                     .then(response => {
-
-                        //                         const message = {
+                        //                     const message = {
+                        //                         notification: {
+                        //                             title: 'Your vehicle is parked, Thank You',
+                        //                             sound: 'default'
+                        //                         },
+                        //                         android: {
                         //                             notification: {
-                        //                                 title: 'Your vehicle is parked, Thank You',
                         //                                 sound: 'default'
-                        //                             },
-                        //                             android: {
-                        //                                 notification: {
+                        //                             }
+                        //                         },
+                        //                         apns: {
+                        //                             payload: {
+                        //                                 aps: {
                         //                                     sound: 'default'
                         //                                 }
-                        //                             },
-                        //                             apns: {
-                        //                                 payload: {
-                        //                                     aps: {
-                        //                                         sound: 'default'
-                        //                                     }
-                        //                                 }
-                        //                             },
-                        //                             token: FcmToken,
-                        //                         };
+                        //                             }
+                        //                         },
+                        //                         token: FcmToken,
+                        //                     };
 
-                        //                         fcm.send(message)
-                        //                             .then((response) => {
+                        //                     fcm.send(message)
+                        //                         .then((response) => {
+                        //                             var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                        //                             res.status(HTTP.SUCCESS).json(a);
 
-                        //                                 var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
-                        //                                 res.status(HTTP.SUCCESS).json(a);
+                        //                         })
+                        //                         .catch((error) => {
+                        //                             var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                        //                             res.status(HTTP.SUCCESS).json(a);
+                        //                         });
 
-                        //                             })
-                        //                             .catch((error) => {
+                        //                 })
+                        //                 .catch(error => {
+                        //                     console.error('Error:', error);
+                        //                 });
 
-                        //                                 var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
-                        //                                 res.status(HTTP.SUCCESS).json(a);
-                        //                             });
-
-
-                        //                     })
-                        //                     .catch(error => {
-                        //                         console.error('Error:', error);
-                        //                     });
-
-                        //             } else {
-                        //                 console.error('Request failed with status code:', response.status);
-                        //             }
-
-                        //         } catch (error) {
-                        //             console.error('An error occurred:', error);
+                        //         } else {
+                        //             console.error('Request failed with status code:', response.status);
                         //         }
+
+                        //     } catch (error) {
+                        //         console.error('An error occurred:', error);
                         //     }
-
-                        //     fetchData();
-
-                        // } else {
-                        //     var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
-                        //     res.status(HTTP.NOT_FOUND).json(a);
                         // }
+
+                        // fetchData();
+
+                        if (ParkedCar1.length !== 0) {
+
+                            await Todo8.findOneAndUpdate({ Username: req.UserName }, {
+                                $set: {
+                                    ValetStatus: 0
+                                }
+                            }, { returnOriginal: false })
+
+                            // ParkedCar1[0].valetTicketPicture = a;
+                            ParkedCar1[0].valetTicketPicture = locations;
+                            ParkedCar1[0].ParkInTime = currentTimeInSurat;
+                            ParkedCar1[0].status = "Parked";
+                            // ParkedCar1[0].status2 = "Parked";
+                            ParkedCar1[0].CarPictureUploadStatus = "0"
+
+                            ParkedCar1[0].save();
+
+                            let data2 = new Todo7({
+                                UserName: response.data.message[0],
+                                Message: "Car is parked",
+                                ParkInTime: currentTimeInSurat
+                            });
+
+                            await data2.save();
+
+                            async function fetchData() {
+                                try {
+
+                                    const response = await axios.post(`${Ip}/NumberToMember`, postData);
+
+                                    if (response.status === 200) {
+
+                                        const UserNameData = response.data.message[0];
+
+                                        var FcmTokenUser = await Todo.find({ UserName: UserNameData })
+
+                                        var array1 = await FcmTokenUser[0].ActiveParkingUser;
+                                        var RemoveElement = await ParkedCar1[0].CarBringer;
+
+                                        FcmTokenUser[0].ActiveParkingUser = array1.filter(function (item) {
+                                            return item !== RemoveElement
+                                        })
+
+                                        await FcmTokenUser[0].save();
+
+                                        // var ActivePushParkingUser = await FcmTokenUser[0].UserName;
+                                        // FcmTokenUser[0].ActiveParkingUser.push(ActivePushParkingUser);
+                                        // await FcmTokenUser[0].save();
+
+                                        var FcmToken = await FcmTokenUser[0].Fcm;
+
+                                        axios.post(`${Ip}/StatusChange`, postData)
+                                            .then(response => {
+
+                                                const message = {
+                                                    notification: {
+                                                        title: 'Your vehicle is parked, Thank You',
+                                                        sound: 'default'
+                                                    },
+                                                    android: {
+                                                        notification: {
+                                                            sound: 'default'
+                                                        }
+                                                    },
+                                                    apns: {
+                                                        payload: {
+                                                            aps: {
+                                                                sound: 'default'
+                                                            }
+                                                        }
+                                                    },
+                                                    token: FcmToken,
+                                                };
+
+                                                fcm.send(message)
+                                                    .then((response) => {
+
+                                                        var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                                                        res.status(HTTP.SUCCESS).json(a);
+
+                                                    })
+                                                    .catch((error) => {
+
+                                                        var a = { "message": "Valet ticket uploaded successfully & notification sent to customer", "status": `${HTTP.SUCCESS}` }
+                                                        res.status(HTTP.SUCCESS).json(a);
+                                                    });
+
+
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                            });
+
+                                    } else {
+                                        console.error('Request failed with status code:', response.status);
+                                    }
+
+                                } catch (error) {
+                                    console.error('An error occurred:', error);
+                                }
+                            }
+
+                            fetchData();
+
+                        } else {
+                            var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
+                            res.status(HTTP.NOT_FOUND).json(a);
+                        }
 
                     } else {
                         var a = { "message": "Token has expired", "status": `${HTTP.UNAUTHORIZED}` }
@@ -4759,11 +4757,8 @@ class class1 {
                             await User[i].save();
 
                         }
-
                     }
-
                 }
-
             }
 
             var message2 = { "message": "Data Load Successfully", "status": `${HTTP.SUCCESS}` }
