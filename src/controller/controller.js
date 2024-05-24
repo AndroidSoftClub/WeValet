@@ -19,7 +19,8 @@ const os = require('os');
 if (os.hostname() == "DESKTOP-796LHPC") {
     var Ip = process.env.IpAddress;
 } else {
-    var Ip = "http://13.200.187.159";
+    // var Ip = "http://13.200.187.159";
+    var Ip = "http://65.2.158.253";
 }
 
 const axios = require('axios');
@@ -4428,11 +4429,10 @@ class class1 {
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
+    
     static M = async (req, res) => {
         try {
-
             if (req.Phone) {
-
                 var User = await Todo.find({ Phone: req.Phone });
                 var Vehicles = [];
 
@@ -4445,7 +4445,6 @@ class class1 {
                     if (User[0].VehicleDetail[1]) {
                         await Vehicles.push(User[0].VehicleDetail[1].RegistrationNumber);
                     }
-
                 }
 
                 const filteredArray = Vehicles.filter((item) => {
