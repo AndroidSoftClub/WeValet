@@ -710,14 +710,22 @@ class class1 {
                         }
 
                         var countryCN = "INDIA"
-                        // Example usage
 
-                        if (startsWithValidCountryCode(User.Phone)) {
-                            countryCN = "INDIA"
-                            console.log('Phone number starts with a valid country code (+91 or )');
+                        
+                        if (User) {
+                            var UserPhon = User.Phone;
+                            if(startsWithValidCountryCode(UserPhon)){
+                                countryCN = "INDIA"
+                            }else{
+                                countryCN = "USA"
+                            }
                         } else {
-                            countryCN = "USA"
-                            console.log('Phone number does not start with a valid country +1 code');
+                            var UserPhon = User2.Phone;
+                            if(startsWithValidCountryCode(UserPhon)){
+                                countryCN = "INDIA"
+                            }else{
+                                countryCN = "USA"
+                            }
                         }
 
                         if (User) {
