@@ -1929,6 +1929,170 @@ class class1 {
 
                         var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber, status: "", CarPictureUploadStatus: "1" })
 
+                        if (ParkedCar1.length == 0) {
+
+                            var Parklocation = await User.BusinessUnitName;
+
+                            var AwsState = await Todo2.find({ UnitName: Parklocation });
+
+                            var OfficialState = await AwsState[0].State;
+                            var OfficialCity = await AwsState[0].City;
+
+                            const postData2 = {
+                                RegistrationNumber: req.body.RegistrationNumber,
+                            };
+
+                            const response = await axios.post(`${Ip}/NumberToMember`, postData2);
+
+                            var UserDataUsername = await response.data.message[0];
+                            var UserData = await Todo.find({ UserName: UserDataUsername })
+
+                            var UpdatedParklocation = [];
+
+                            if (req.body.UpdatedParklocation) {
+                                await UpdatedParklocation.push(req.body.UpdatedParklocation)
+                            } else {
+                                await UpdatedParklocation.push(Parklocation)
+                            }
+
+                            const locations = [];
+
+                            if (UserData[0].VehicleDetail) {
+
+                                const suratTimezone = 'Asia/Kolkata';
+                                const currentTimeInSurat = moment().tz(suratTimezone).format('YYYY-MM-DDTHH:mm:ss');
+
+                                const currentDate = new Date(currentTimeInSurat);
+
+                                var currentYear = await currentDate.getFullYear();
+                                var currentMonth;
+                                var currentDay;
+                                var currentHours;
+                                var currentMinutes;
+                                var currentSeconds;
+
+                                if (currentDate.getMonth() < 10) {
+                                    var currentMonth = await `0${currentDate.getMonth() + 1}`;
+                                } else {
+                                    var currentMonth = await currentDate.getMonth() + 1;
+                                }
+
+                                if (currentDate.getDate() < 10) {
+                                    var currentDay = await `0${currentDate.getDate()}`;
+                                } else {
+                                    var currentDay = await currentDate.getDate();
+                                }
+
+                                if (currentDate.getHours() < 10) {
+                                    var currentHours = await `0${currentDate.getHours()}`;
+                                } else {
+                                    var currentHours = await currentDate.getHours();
+                                }
+
+                                if (currentDate.getMinutes() < 10) {
+                                    var currentMinutes = await `0${currentDate.getMinutes()}`;
+                                } else {
+                                    var currentMinutes = await currentDate.getMinutes();
+                                }
+
+                                if (currentDate.getSeconds() < 10) {
+                                    var currentSeconds = await `0${currentDate.getSeconds()}`;
+                                } else {
+                                    var currentSeconds = await currentDate.getSeconds();
+                                }
+
+                                var IsOwnerCarBringer
+                                if (req.body.CarBringer == UserDataUsername) {
+                                    IsOwnerCarBringer = 1
+                                } else {
+                                    IsOwnerCarBringer = 0
+                                }
+
+                                if (UserData[0].VehicleDetail[0].RegistrationNumber == req.body.RegistrationNumber) {
+
+                                    let data2 = new Todo4({
+                                        CompanyName: UserData[0].VehicleDetail[0].CompanyName,
+                                        Model: UserData[0].VehicleDetail[0].Model,
+                                        RegistrationNumber: req.body.RegistrationNumber,
+                                        Color: UserData[0].VehicleDetail[0].Color,
+                                        CarPicture: [],
+                                        Parklocation: Parklocation,
+                                        UpdatedParklocation: UpdatedParklocation[0],
+                                        CarBringer: req.body.CarBringer,
+                                        IsOwnerCarBringer: IsOwnerCarBringer,
+                                        CarParkBy: req.UserName,
+                                        status: "",
+                                        status2: "",
+                                        UserWaitTime: [],
+                                        TimeUpdateStatus: 0,
+                                        Member: response.data.message,
+                                        ValetStatus: 1,
+                                        ParkOutTime: "",
+                                        ParkInTime: "",
+                                        WaitTime: "",
+                                        CarPictureUploadStatus: "1"
+                                    });
+
+                                    await data2.save();
+
+                                } else {
+
+                                    let data2 = new Todo4({
+                                        CompanyName: UserData[0].VehicleDetail[1].CompanyName,
+                                        Model: UserData[0].VehicleDetail[1].Model,
+                                        RegistrationNumber: req.body.RegistrationNumber,
+                                        Color: UserData[0].VehicleDetail[1].Color,
+                                        CarPicture: [],
+                                        Parklocation: Parklocation,
+                                        UpdatedParklocation: UpdatedParklocation[0],
+                                        CarBringer: req.body.CarBringer,
+                                        IsOwnerCarBringer: IsOwnerCarBringer,
+                                        CarParkBy: req.UserName,
+                                        status: "",
+                                        status2: "",
+                                        UserWaitTime: [],
+                                        TimeUpdateStatus: 0,
+                                        Member: response.data.message,
+                                        ValetStatus: 1,
+                                        ParkOutTime: "",
+                                        ParkInTime: "",
+                                        WaitTime: "",
+                                        CarPictureUploadStatus: "1"
+                                    });
+
+                                    await data2.save();
+                                }
+                            }
+
+                            User.ValetStatus = 1;
+                            await User.save();
+
+                            const postData = {
+                                RegistrationNumber: req.body.RegistrationNumber,
+                                Status: "",
+                            };
+
+                            const formattedDateTime2 = `${currentYear}-${currentMonth}-${currentDay}`;
+                            const formattedDateTime3 = `${currentHours}:${currentMinutes}:${currentSeconds}`;
+
+                            let data222 = new Todo10({
+                                Date: formattedDateTime2,
+                                Time: formattedDateTime3,
+                                Pictures: locations,
+                                RegistrationNumber: req.body.RegistrationNumber,
+                                UserAction: "ParkIn"
+                            });
+
+                            await data222.save();
+
+                            axios.post(`${Ip}/StatusChange`, postData)
+                                .then(response => {
+
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        }
 
                         if (ParkedCar1.length !== 0) {
 
@@ -2031,10 +2195,9 @@ class class1 {
                                     console.error('An error occurred:', error);
                                 }
                             }
-
                             fetchData();
-
                         } else {
+
                             var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
                             res.status(HTTP.NOT_FOUND).json(a);
                         }
@@ -4429,7 +4592,7 @@ class class1 {
             res.status(HTTP.INTERNAL_SERVER_ERROR).json(a);
         }
     };
-    
+
     static M = async (req, res) => {
         try {
             if (req.Phone) {
