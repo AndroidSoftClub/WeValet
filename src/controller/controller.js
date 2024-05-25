@@ -704,8 +704,6 @@ class class1 {
 
                         const token = jwt.sign({ UserName: LowerCaseUsername }, SECRET_KEY);
 
-                        console.log("User Number: " + User2.Phone)
-
                         function startsWithValidCountryCode(phoneNumber) {
                             const validCodes = ['+91'];
                             return validCodes.some(code => phoneNumber.startsWith(code));
@@ -714,7 +712,7 @@ class class1 {
                         var countryCN = "INDIA"
                         // Example usage
 
-                        if (startsWithValidCountryCode(User2.Phone)) {
+                        if (startsWithValidCountryCode(User.Phone)) {
                             countryCN = "INDIA"
                             console.log('Phone number starts with a valid country code (+91 or )');
                         } else {
