@@ -1367,6 +1367,8 @@ class class1 {
                             console.log(Parklocation)
                             var AwsState = await Todo2.find({ UnitName: Parklocation });
 
+                            var CountryName = await AwsState[0].Country;
+
                             console.log(AwsState)
                             var OfficialState = await AwsState[0].State;
                             var OfficialCity = await AwsState[0].City;
@@ -1452,7 +1454,7 @@ class class1 {
 
                                     const params = {
                                         Bucket: process.env.AWS_S3_BUCKET,
-                                        Key: `${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
+                                        Key: `${CountryName}/${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
                                         Body: file.buffer,
                                         ACL: 'public-read',
                                         ContentType: file.mimetype,
@@ -1604,7 +1606,7 @@ class class1 {
 
                         console.log(Parklocation)
                         var AwsState = await Todo2.find({ UnitName: Parklocation });
-
+                        var countryName = await AwsState[0].Country;
                         console.log(AwsState)
                         var OfficialState = await AwsState[0].State;
                         var OfficialCity = await AwsState[0].City;
@@ -1690,7 +1692,7 @@ class class1 {
 
                                 const params = {
                                     Bucket: process.env.AWS_S3_BUCKET,
-                                    Key: `${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
+                                    Key: `${countryName}/${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
                                     Body: file.buffer,
                                     ACL: 'public-read',
                                     ContentType: file.mimetype,
@@ -1843,7 +1845,10 @@ class class1 {
 
                         var Parklocation = await User.BusinessUnitName;
 
+                        
                         var AwsState = await Todo2.find({ UnitName: Parklocation });
+
+                        var countryName = await AwsState[0].Country;
                         var OfficialState = await AwsState[0].State;
                         var OfficialCity = await AwsState[0].City;
 
@@ -1909,7 +1914,7 @@ class class1 {
 
                             const params = {
                                 Bucket: process.env.AWS_S3_BUCKET,
-                                Key: `${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
+                                Key: `${countryName}/${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
                                 Body: file.buffer,
                                 ACL: 'public-read',
                                 ContentType: file.mimetype,
@@ -2207,7 +2212,6 @@ class class1 {
                             var a = { "message": "Car Not Find IN Intermediate Parking Mode", "status": `${HTTP.NOT_FOUND}` }
                             res.status(HTTP.NOT_FOUND).json(a);
                         }
-
 
                         // var ParkedCar1 = await Todo4.find({ RegistrationNumber: req.body.RegistrationNumber })
 
@@ -5091,6 +5095,7 @@ class class1 {
 
                     var AwsState = await Todo2.find({ UnitName: ParkedCar2[0].Parklocation });
 
+                    var countryName = await AwsState[0].Country;
                     var OfficialState = AwsState[0].State;
                     var OfficialCity = AwsState[0].City;
                     var Parklocation = ParkedCar2[0].Parklocation;
@@ -5109,7 +5114,7 @@ class class1 {
 
                         const params = {
                             Bucket: process.env.AWS_S3_BUCKET,
-                            Key: `${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
+                            Key: `${countryName}/${OfficialState}/${OfficialCity}/${Parklocation}/${req.body.RegistrationNumber}/${fileName}`,
                             Body: file.buffer,
                             ACL: 'public-read',
                             ContentType: file.mimetype,
