@@ -8289,9 +8289,7 @@ class class2 {
     };
     static I = async (req, res) => {
         try {
-
             var User = await Todo.findOne({ _id: req.params.id })
-
             if (User.Phone) {
 
                 var User2 = await Todo.findOne({ Phone: User.Phone })
