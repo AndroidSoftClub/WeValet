@@ -114,9 +114,7 @@ class class1 {
                         for (var j = 0; j < User2[i].VehicleDetail.length; j++) {
                             await VehicleDetailArray.push(User2[i].VehicleDetail[j].RegistrationNumber)
                         }
-
                     }
-
                 }
 
                 if (VehicleDetailArray.includes(req.body.RegistrationNumber)) {
@@ -179,7 +177,7 @@ class class1 {
                             let data = new Todo({
                                 UserName: req.body.UserName,
                                 Email: req.body.Email,
-                                Phone: formattedNumber,
+                                Phone: formatPhoneNumber(req.body.Phone),
                                 VehicleDetail: [],
                                 TimeUpdateStatus: 0,
                                 Request: 0,
@@ -711,19 +709,19 @@ class class1 {
 
                         var countryCN = "INDIA"
 
-                        
+
                         if (User) {
                             var UserPhon = User.Phone;
-                            if(startsWithValidCountryCode(UserPhon)){
+                            if (startsWithValidCountryCode(UserPhon)) {
                                 countryCN = "INDIA"
-                            }else{
+                            } else {
                                 countryCN = "USA"
                             }
                         } else {
                             var UserPhon = User2.Phone;
-                            if(startsWithValidCountryCode(UserPhon)){
+                            if (startsWithValidCountryCode(UserPhon)) {
                                 countryCN = "INDIA"
-                            }else{
+                            } else {
                                 countryCN = "USA"
                             }
                         }
@@ -1845,7 +1843,7 @@ class class1 {
 
                         var Parklocation = await User.BusinessUnitName;
 
-                        
+
                         var AwsState = await Todo2.find({ UnitName: Parklocation });
 
                         var countryName = await AwsState[0].Country;
